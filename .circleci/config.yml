@@ -30,6 +30,9 @@ jobs:
               npm install @semantic-release/changelog
               npm install @semantic-release/git
               npx semantic-release --branches $CIRCLE_BRANCH
+      - run:
+          name: Export dot env variable to .env file
+          command: printenv | grep gitflow-staging | sed 's/^\(gitflow-staging\)*//' >> .env
 workflows:
   version: 2.1
   build-stage:
