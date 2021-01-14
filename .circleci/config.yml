@@ -29,7 +29,9 @@ jobs:
               npx semantic-release --branches $CIRCLE_BRANCH
       - run:
           name: Export dot env variable to .env file
-          command: printenv | grep gitflow-staging | sed 's/^\(gitflow-staging\)*//' >> .env
+          command: 
+             touch .env
+             printenv | grep gitflow-staging | sed 's/^\(gitflow-staging\)*//' >> .env
 workflows:
   version: 2
   build-stage:
