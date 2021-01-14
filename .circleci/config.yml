@@ -2,10 +2,7 @@
 #
 # Check https://circleci.com/docs/2.0/language-php/ for more details
 #
-version: 2.1
-
-orbs:
-  semantic-versioning: payfit/semantic-versioning@0.93.0
+version: 2.0
 
 jobs:
   build:
@@ -34,7 +31,7 @@ jobs:
           name: Export dot env variable to .env file
           command: printenv | grep gitflow-staging | sed 's/^\(gitflow-staging\)*//' >> .env
 workflows:
-  version: 2.1
+  version: 2.0
   build-stage:
     jobs:
         - build
