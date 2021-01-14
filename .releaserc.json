@@ -7,7 +7,7 @@
         {
             "path": "semantic-release",
             "name": "Ven2575/gitflow-demo"
-            "branches": ["main"]
+            "branches": "main"
         }
     ],
     "tagFormat": "${version}"
