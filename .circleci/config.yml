@@ -2,8 +2,11 @@
 #
 # Check https://circleci.com/docs/2.0/language-php/ for more details
 #
-version: 2.0
+version: 2.1
 
+orbs:
+  semantic-versioning: payfit/semantic-versioning@0.93.0
+  
 jobs:
   build:
     docker:
