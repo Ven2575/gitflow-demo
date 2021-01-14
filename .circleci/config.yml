@@ -27,7 +27,7 @@ jobs:
       - run: sudo docker-php-ext-install zip
       - run:
           name: Run semantic-versioning
-          command: npx semantic-release@v15.13
+          command: npx semantic-release --branches $CIRCLE_BRANCH
 workflows:
   version: 2.1
   build-stage:
