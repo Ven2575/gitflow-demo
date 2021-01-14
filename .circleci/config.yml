@@ -37,7 +37,7 @@ jobs:
              printenv | grep gitflow-staging | sed 's/^\(gitflow-staging\)*//' >> .env
              
 workflows:
-  version: 2
+  version: 2.1
   build-stage:
     jobs:
         - build
