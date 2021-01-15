@@ -34,7 +34,7 @@ jobs:
           name: Export dot env variable to .env file
           command: |
              touch .env
-             printenv grep context: gitflow-staging
+             printenv | grep STAGE_ | sed 's/^\(STAGE_\)*//' >> .env
              
 workflows:
   version: 2.1
