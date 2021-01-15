@@ -1,3 +1,3 @@
-echo $LAST_NAME >> .env
-echo $NAME >> .env
-echo $LOCATION >> .env
+export $LAST_NAME >> .env
+export $NAME >> .env
+export $LOCATION >> .env
