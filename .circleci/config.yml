@@ -2,7 +2,10 @@
 #
 # Check https://circleci.com/docs/2.0/language-php/ for more details
 #
-version: 2
+version: 2.1
+
+orbs:
+   slack: circleci/slack@4.2.0
   
 jobs:
   build:
@@ -30,6 +33,12 @@ jobs:
       - run:
           name: Export dot env variable to .env file
           command:  sh ./env_script.sh
+      - slack/status:
+          event: fail
+          channel: "legal-monitoring"
+      - slack/status:
+          event: pass
+          channel: "legal-monitoring"
              
 workflows:
   version: 2
