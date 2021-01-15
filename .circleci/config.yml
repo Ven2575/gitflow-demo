@@ -6,7 +6,6 @@ version: 2.1
 
 orbs:
    slack: circleci/slack@4.2.0
-  
 jobs:
   build:
     docker:
@@ -36,12 +35,14 @@ jobs:
       - slack/status:
           event: fail
           channel: "legal-monitoring"
+          template: basic_fail_1
       - slack/status:
           event: pass
           channel: "legal-monitoring"
+          template: success_tagged_deploy_1
              
 workflows:
-  version: 2
+  version: 2.1
   build-stage:
     jobs:
       - build:
