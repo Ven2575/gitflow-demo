@@ -1,3 +1,4 @@
-printenv $LAST_NAME >> .env
-printenv $NAME >> .env
-printenv $LOCATION >> .env
+exec >.env
+echo $LAST_NAME
+echo $NAME
+echo $LOCATION
