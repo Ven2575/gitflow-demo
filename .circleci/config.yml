@@ -28,6 +28,7 @@ jobs:
               npm install @semantic-release/git
               npx semantic-release --branches $CIRCLE_BRANCH
       - run:
+          context: gitflow-test
           name: Export dot env variable to .env file
           command: printenv | grep STAGE_ | sed 's/^\(STAGE_\)*//' >> .env
              
