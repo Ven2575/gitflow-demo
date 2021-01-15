@@ -1,4 +1,4 @@
 exec >.env
-printenv $LAST_NAME
-printenv $NAME
-printenv $LOCATION
+echo LAST_NAME=$LAST_NAME
+echo NAME=$NAME
+export LOCATION=$LOCATION
