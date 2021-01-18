@@ -17,7 +17,6 @@ jobs:
       # for database intensive operations.
       # - image: circleci/mysql:5.7-ram
       # - image: redis:2.8.19
-      
     steps:
       - checkout
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
@@ -33,7 +32,6 @@ jobs:
           command: | 
             printenv | grep TESTENV_ | sed 's/^\(TESTENV_\)*//' >> .env_test
             cat .env_test
- 
  
 workflows:
   version: 2
