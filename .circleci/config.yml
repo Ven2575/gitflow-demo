@@ -2,10 +2,8 @@
 #
 # Check https://circleci.com/docs/2.0/language-php/ for more details
 #
-version: 2.1
+version: 2.0
 
-orbs:
-   slack: circleci/slack@4.2.0
 jobs:
   build:
     docker:
@@ -31,18 +29,13 @@ jobs:
               npx semantic-release --branches $CIRCLE_BRANCH
       - run:
           name: Export dot env variable to .env file
-          command:  sh ./env_script.sh
-      - slack/status:
-          event: fail
-          channel: "legal-monitoring"
-          template: basic_fail_1
-      - slack/status:
-          event: pass
-          channel: "legal-monitoring"
-          template: success_tagged_deploy_1
+          command: | 
+            printenv | grep TESTENV_ | sed 's/^\(TESTENV_\)*//' >> .env_test
+            cat .env_test
+
              
 workflows:
-  version: 2.1
+  version: 2
   build-stage:
     jobs:
       - build:
