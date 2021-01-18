@@ -28,7 +28,7 @@ jobs:
               npm install @semantic-release/git
               npx semantic-release --branches $CIRCLE_BRANCH
       - run:
-          name: Export dot env variable to .env file
+          name: Export dot env variable to .env_test file
           command: | 
             printenv | grep TESTENV_ | sed 's/^\(TESTENV_\)*//' >> .env_test
             cat .env_test
