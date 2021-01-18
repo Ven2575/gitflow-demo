@@ -1,4 +1,0 @@
-exec >.env
-echo LAST_NAME=$LAST_NAME
-echo NAME=$NAME
-echo LOCATION=$LOCATION
