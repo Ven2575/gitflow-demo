@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/Ven2575/gitflow-demo/compare/2.0.0...2.1.0) (2021-01-18)
+
+
+### Features
+
+* slack is integrated in pipeline ([c9e7065](https://github.com/Ven2575/gitflow-demo/commit/c9e7065fa21fcb9f02281f06830b6dbafd4bb5e9))
+
 # [2.0.0](https://github.com/Ven2575/gitflow-demo/compare/1.2.1...2.0.0) (2021-01-18)
 
 
