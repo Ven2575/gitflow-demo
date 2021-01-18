@@ -34,11 +34,11 @@ jobs:
           name: Export dot env variable to .env_test file
           command: | 
             printenv | grep TESTENV_ | sed 's/^\(TESTENV_\)*//' >> .env_test
-      - slack/status:
+      - slack/notify:
           event: fail
           channel: "legal-monitoring"
           template: basic_fail_1
-      - slack/status:
+      - slack/notify:
           event: pass
           channel: "legal-monitoring"
           template: success_tagged_deploy_1
