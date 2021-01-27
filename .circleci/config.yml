@@ -4,6 +4,25 @@
 #
 version: 2.1
 
+slack_notification_fail: &slack_notification_fail
+   slack/notify:
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "plain_text",
+                      "text": "the deployment is done on staging server",
+                      "emoji": true
+                    }
+                  ]
+                }
+              ]
+            }
+          event: pass
+
 orbs:
    slack: circleci/slack@4.2.0
    
@@ -42,6 +61,7 @@ jobs:
           event: pass
           channel: "legal-monitoring"
           template: success_tagged_deploy_1
+      - *slack_notification_fail
  
 workflows:
   version: 2.1
