@@ -14,7 +14,7 @@ slack_notification_fail: &slack_notification_fail
                   "fields": [
                     {
                       "type": "plain_text",
-                      "text": "the deployment is done on staging server",
+                      "text": "Success Message: Successfully deployed onto staging server! :dancing_banana:",
                       "emoji": true
                     }
                   ]
