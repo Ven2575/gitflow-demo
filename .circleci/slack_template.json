@@ -1,6 +1,5 @@
 steps:
   - slack/notify:
-          event: fail
           custom: |
             {
               "blocks": [
@@ -16,8 +15,8 @@ steps:
                 }
               ]
             }
+          event: fail
   - slack/notify:
-          event: pass
           custom: |
             {
               "blocks": [
@@ -33,3 +32,4 @@ steps:
                 }
               ]
             }
+          event: pass
