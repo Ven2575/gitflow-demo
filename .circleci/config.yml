@@ -42,7 +42,7 @@ jobs:
           name: JSON test
           command: |
              jq --version
-             echo "{'test': 'test'}" | jq
+             curl -s 'https://api.github.com/repos/stedolan/jq/commits?per_page=5' | jq '.[0] | {message: .commit.message, name: .commit.committer.name}'
       - slack/notify:
           event: always
           channel: "legal-monitoring"
