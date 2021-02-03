@@ -38,7 +38,11 @@ jobs:
       - run:
           name: Export custom slack template
           command: echo 'export MY_ORB_TEMPLATE=$(cat ~/project/slack_template/tests_fail.json)' >> $BASH_ENV
-      - run: jq --version
+      - run: 
+          name: JSON test
+          command: |
+             jq --version
+             echo "{'test': 'test'}" | jq
       - slack/notify:
           event: always
           channel: "legal-monitoring"
