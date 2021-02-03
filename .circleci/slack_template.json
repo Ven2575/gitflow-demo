@@ -1,5 +1,5 @@
-slack_notification_fail_custom: &slack_notification_fail_custom
-  slack/notify:
+steps:
+  - slack/notify:
           event: fail
           custom: |
             {
@@ -16,8 +16,7 @@ slack_notification_fail_custom: &slack_notification_fail_custom
                 }
               ]
             }
-slack_notification_pass_custom: &slack_notification_pass_custom
-  slack/notify:
+  - slack/notify:
           event: pass
           custom: |
             {
