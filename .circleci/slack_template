@@ -1,0 +1,36 @@
+slack_notification_fail_custom: &slack_notification_fail_custom
+  slack/notify:
+          event: fail
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "plain_text",
+                      "text": "Failure Message: Ooops! deployment fail, please go through the pipeline configuration and make require changes! :crying_cat_face:",
+                      "emoji": true
+                    }
+                  ]
+                }
+              ]
+            }
+slack_notification_pass_custom: &slack_notification_pass_custom
+  slack/notify:
+          event: pass
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "plain_text",
+                      "text": "Success Message: Successfully deployed! :dancing_banana:",
+                      "emoji": true
+                    }
+                  ]
+                }
+              ]
+            }
