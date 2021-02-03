@@ -38,14 +38,6 @@ jobs:
           name: Export custom slack template
           command: echo 'export MY_ORB_TEMPLATE=$(cat .circleci/slack_template.json)' >> $BASH_ENV
       - slack/notify:
-          event: fail
-          channel: "legal-monitoring"
-          template: basic_fail_1
-      - slack/notify:
-          event: pass
-          channel: "legal-monitoring"
-          template: success_tagged_deploy_1
-      - slack/notify:
           event: always
           channel: "legal-monitoring"
           template: MY_ORB_TEMPLATE 
