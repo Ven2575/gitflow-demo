@@ -4,25 +4,6 @@
 #
 version: 2.1
 
-slack_notification_fail: &slack_notification_fail
-   slack/notify:
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "plain_text",
-                      "text": "Success Message: Successfully deployed onto staging server! :dancing_banana:",
-                      "emoji": true
-                    }
-                  ]
-                }
-              ]
-            }
-          event: pass
-
 orbs:
    slack: circleci/slack@4.2.0
    
@@ -53,6 +34,9 @@ jobs:
           name: Export dot env variable to .env_test file
           command: | 
             printenv | grep TESTENV_ | sed 's/^\(TESTENV_\)*//' >> .env_test
+      - run:
+          name: Export custom slack template
+          command: echo 'export MY_ORB_TEMPLATE=$(cat .circleci/slack_template.json)' >> $BASH_ENV
       - slack/notify:
           event: fail
           channel: "legal-monitoring"
@@ -61,7 +45,10 @@ jobs:
           event: pass
           channel: "legal-monitoring"
           template: success_tagged_deploy_1
-      - *slack_notification_fail
+      - slack/notify:
+          event: always
+          channel: "legal-monitoring"
+          template: MY_ORB_TEMPLATE 
  
 workflows:
   version: 2.1
