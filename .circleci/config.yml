@@ -37,7 +37,7 @@ jobs:
             printenv | grep TESTENV_ | sed 's/^\(TESTENV_\)*//' >> .env_test
       - run:
           name: Export custom slack template
-          command: echo 'export MY_ORB_TEMPLATE=$(cat .circleci/slack_template.json)' >> $BASH_ENV
+          command: echo 'export MY_ORB_TEMPLATE=$(cat ~/project/.circleci/slack_template.json)' >> $BASH_ENV
      
       - slack/notify:
           event: always
