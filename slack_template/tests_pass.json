@@ -1,0 +1,15 @@
+{
+    "text":"Text here for custom notification", 
+    "blocks": [
+         {
+            "type": "section",
+            "fields": [
+                {
+                  "type": "plain_text",
+                  "text": "*custom template test pass *",
+                  "emoji": true
+                }
+              ]
+         }
+    ]
+ }
