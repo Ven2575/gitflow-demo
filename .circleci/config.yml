@@ -50,7 +50,7 @@ jobs:
             - "4e:80:2e:d7:16:88:03:b3:43:ee:15:bf:3e:c1:5b:05"
       - run:
           name: creating directories
-          command: ssh $SSH_USER@$SSH_HOST 'cd /var/www/dev.consent.trustedshops.com/web/public/ && rm -r $(date +"%d-%m-%Y") && mkdir -p $(date +"%d%m%Y")'
+          command: ssh $SSH_USER@$SSH_HOST 'cd /var/www/dev.consent.trustedshops.com/web/public/ && mkdir -p $(date +"%d%m%Y")'
       - run:
           name: Deploy over SSH
           command: |
