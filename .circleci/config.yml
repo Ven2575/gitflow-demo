@@ -24,7 +24,6 @@ jobs:
       - checkout
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install zip
-      - run: sudo apt-get install jq curl
       - run:
           name: Run semantic-versioning
           command: |
@@ -37,15 +36,10 @@ jobs:
             printenv | grep TESTENV_ | sed 's/^\(TESTENV_\)*//' >> .env_test
       - run:
           name: Export custom slack template
-          command: echo 'export MY_ORB_TEMPLATE_PASS=$(cat ./project/slack_template/tests_pass.json)' >> $BASH_ENV
-      - run: 
-          name: JSON test
-          command: |
-             jq --version
-             curl -s 'https://api.github.com/repos/stedolan/jq/commits?per_page=5' | jq '.[0] | {message: .commit.message, name: .commit.committer.name}'
+          command: echo 'export MY_ORB_TEMPLATE_PASS=$(cat ~/project/slack_template/tests_pass.json)' >> $BASH_ENV
       - slack/notify:
           event: pass
-          channel: "pipeline-test"
+          channel: "legal-monitoring"
           template: MY_ORB_TEMPLATE_PASS 
  
 workflows:
