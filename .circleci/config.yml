@@ -37,16 +37,16 @@ jobs:
             printenv | grep TESTENV_ | sed 's/^\(TESTENV_\)*//' >> .env_test
       - run:
           name: Export custom slack template
-          command: echo 'export MY_ORB_TEMPLATE=$(cat ~/project/slack_template/tests_fail.json)' >> $BASH_ENV
+          command: echo 'export MY_ORB_TEMPLATE_PASS=$(cat ./project/slack_template/tests_pass.json)' >> $BASH_ENV
       - run: 
           name: JSON test
           command: |
              jq --version
              curl -s 'https://api.github.com/repos/stedolan/jq/commits?per_page=5' | jq '.[0] | {message: .commit.message, name: .commit.committer.name}'
       - slack/notify:
-          event: always
-          channel: "legal-monitoring"
-          template: MY_ORB_TEMPLATE 
+          event: pass
+          channel: "pipeline-test"
+          template: MY_ORB_TEMPLATE_PASS 
  
 workflows:
   version: 2.1
