@@ -20,6 +20,7 @@ jobs:
       # for database intensive operations.
       # - image: circleci/mysql:5.7-ram
       # - image: redis:2.8.19
+    working_directory: ~/gitflow
     steps:
       - checkout
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
@@ -37,10 +38,41 @@ jobs:
       - run:
           name: Export custom slack template
           command: echo 'export MY_ORB_TEMPLATE_PASS=$(cat ~/project/slack_template/tests_pass.json)' >> $BASH_ENV
-      - slack/notify:
-          event: pass
-          channel: "legal-monitoring"
-          template: MY_ORB_TEMPLATE_PASS 
+      - run:
+          name: Archiving the codebase
+          command: zip -r gitflow.zip .
+      - persist_to_workspace:
+          root: .
+          paths:
+            - gitflow.zip
+  deploy-staging:
+    machine:
+      enabled: true
+    steps:
+      - attach_workspace:
+          at: /tmp/
+      - run:
+          name: Fix ssh Could not resolve hostname
+          command: |
+             ssh-keyscan 94.130.12.67 >> ~/.ssh/known_hosts # Add staging server IP to known hosts
+      - add_ssh_keys:
+          fingerprints:
+            - "4e:80:2e:d7:16:88:03:b3:43:ee:15:bf:3e:c1:5b:05"
+      - run:
+          name: creating directories
+          command: ssh $SSH_USER@$SSH_HOST 'cd /var/www/dev.consent.trustedshops.com/web/public/ && mkdir $(date +"%d-%m-%Y")'
+      - run:
+          name: Deploy over SSH
+          command: |
+             scp -r /tmp/gitflow.zip $SSH_USER@$SSH_HOST:/var/www/dev.consent.trustedshops.com/web/public/$(date +"%d-%m-%Y"/
+      #ssh into staging server
+  #    - run:
+  #        name: Executing Commands on Staging Server
+  #        command: ssh $SSH_USER@$SSH_HOST 'cd /var/www/dev.consent.trustedshops.com/web/public/'
+  #    - slack/notify:
+  #        event: pass
+  #        channel: "legal-monitoring"
+  #        template: MY_ORB_TEMPLATE_PASS 
  
 workflows:
   version: 2.1
