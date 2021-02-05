@@ -7,7 +7,7 @@
             "fields": [
                 {
                   "type": "plain_text",
-                  "text": "*custom template test pass *",
+                  "text": "custom template test fail",
                   "emoji": true
                 }
               ]
@@ -22,7 +22,7 @@
             "fields": [
                 {
                   "type": "plain_text",
-                  "text": "*custom template test pass *",
+                  "text": "custom template test pass",
                   "emoji": true
                 }
               ]
