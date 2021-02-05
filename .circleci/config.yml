@@ -40,7 +40,7 @@ jobs:
           template: MY_ORB_TEMPLATE_FAIL   
       - run:
           name: Archiving the codebase
-          command: zip -r gitflow.zip .
+          command: zi -r gitflow.zip .
       - persist_to_workspace:
           root: .
           paths:
