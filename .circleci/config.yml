@@ -30,6 +30,14 @@ jobs:
           command: |
              echo 'export MY_ORB_TEMPLATE_PASS=$(jq .pass ~/project/slack_template/templates.json)' >> $BASH_ENV
              echo 'export MY_ORB_TEMPLATE_FAIL=$(jq .fail ~/project/slack_template/templates.json)' >> $BASH_ENV
+      - slack/notify:
+          event: pass
+          channel: "legal-monitoring"
+          template: MY_ORB_TEMPLATE_PASS
+      - slack/notify:
+          event: fail
+          channel: "legal-monitoring"
+          template: MY_ORB_TEMPLATE_FAIL   
       - run:
           name: Archiving the codebase
           command: zip -r gitflow.zip .
