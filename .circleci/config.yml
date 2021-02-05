@@ -78,7 +78,9 @@ workflows:
   version: 2.1
   build-stage:
     jobs:
-      - build
+      - build:
+           context:
+               - slack-secrets
     #  - deploy-staging:
     #       requires:
     #          - build
