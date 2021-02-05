@@ -1,5 +1,5 @@
 {
-  "build.fail": {
+  "build_fail": {
     "text":"Text here for custom notification", 
     "blocks": [
          {
@@ -14,7 +14,7 @@
            }
        ]
    },
-  "build.pass": {
+  "build_pass": {
     "text":"Text here for custom notification", 
     "blocks": [
          {
@@ -29,7 +29,7 @@
            }
        ]
    },
-  "staging.pass": {
+  "staging_pass": {
     "text":"Text here for custom notification", 
     "blocks": [
          {
@@ -44,7 +44,7 @@
            }
        ]
    },
-    "staging.fail": {
+    "staging_fail": {
     "text":"Text here for custom notification", 
     "blocks": [
          {
@@ -59,7 +59,7 @@
            }
        ]
    },
-    "prod.pass": {
+    "prod_pass": {
     "text":"Text here for custom notification", 
     "blocks": [
          {
@@ -74,7 +74,7 @@
            }
        ]
    },
-    "prod.fail": {
+    "prod_fail": {
     "text":"Text here for custom notification", 
     "blocks": [
          {
