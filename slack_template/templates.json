@@ -1,5 +1,5 @@
 {
-  "fail": {
+  "build.fail": {
     "text":"Text here for custom notification", 
     "blocks": [
          {
@@ -7,14 +7,14 @@
             "fields": [
                 {
                   "type": "plain_text",
-                  "text": "custom template test fail",
+                  "text": "Failure Message: Ooops! Build step is failed, please go through the error and make require changes! :disappointed: ",
                   "emoji": true
                 }
               ]
            }
        ]
    },
-  "pass": {
+  "build.pass": {
     "text":"Text here for custom notification", 
     "blocks": [
          {
@@ -22,11 +22,71 @@
             "fields": [
                 {
                   "type": "plain_text",
-                  "text": "custom template test pass",
+                  "text": "Success Message: Eureka :sunglasses:! Build step is Successfully completed! :hamster_dance:",
                   "emoji": true
                 }
               ]
            }
        ]
-   }   
+   },
+  "staging.pass": {
+    "text":"Text here for custom notification", 
+    "blocks": [
+         {
+            "type": "section",
+            "fields": [
+                {
+                  "type": "plain_text",
+                  "text": "Success Message: Eureka :sunglasses:! Successfully deployed onto staging environment! :hamster_dance:",
+                  "emoji": true
+                }
+              ]
+           }
+       ]
+   },
+    "staging.fail": {
+    "text":"Text here for custom notification", 
+    "blocks": [
+         {
+            "type": "section",
+            "fields": [
+                {
+                  "type": "plain_text",
+                  "text": "Failure Message: Ooops! Staging environment deployment is failed, please go through the error and make require changes! :disappointed: ",
+                  "emoji": true
+                }
+              ]
+           }
+       ]
+   },
+    "prod.pass": {
+    "text":"Text here for custom notification", 
+    "blocks": [
+         {
+            "type": "section",
+            "fields": [
+                {
+                  "type": "plain_text",
+                  "text": "Success Message: Eureka :sunglasses:! Successfully deployed onto prod environment! :hamster_dance:",
+                  "emoji": true
+                }
+              ]
+           }
+       ]
+   },
+    "prod.fail": {
+    "text":"Text here for custom notification", 
+    "blocks": [
+         {
+            "type": "section",
+            "fields": [
+                {
+                  "type": "plain_text",
+                  "text": "Failure Message: Ooops! Prod environment deployment is failed, please go through the error and make require changes! :disappointed: ",
+                  "emoji": true
+                }
+              ]
+           }
+       ]
+   }
 }
