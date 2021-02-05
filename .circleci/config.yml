@@ -28,8 +28,8 @@ jobs:
       - run:
           name: Export custom slack template
           command: |
-             echo 'export MY_ORB_TEMPLATE_PASS=$(jq build_pass ~/gitflow/slack_template/templates.json)' >> $BASH_ENV
-             echo 'export MY_ORB_TEMPLATE_FAIL=$(jq build_fail ~/gitflow/slack_template/templates.json)' >> $BASH_ENV  
+             echo 'export MY_ORB_TEMPLATE_PASS=$(jq .build_pass ~/gitflow/slack_template/templates.json)' >> $BASH_ENV
+             echo 'export MY_ORB_TEMPLATE_FAIL=$(jq .build_fail ~/gitflow/slack_template/templates.json)' >> $BASH_ENV  
       - run:
           name: Archiving the codebase
           command: zip -r gitflow.zip .
