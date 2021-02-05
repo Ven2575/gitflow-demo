@@ -32,7 +32,11 @@ jobs:
              echo 'export MY_ORB_TEMPLATE_FAIL=$(jq .fail ~/gitflow/slack_template/templates.json)' >> $BASH_ENV  
       - run:
           name: Archiving the codebase
-          command: zi -r gitflow.zip .
+          command: zip -r gitflow.zip .
+      - persist_to_workspace:
+          root: .
+          paths:
+            - gitflow.zip
       - slack/notify:
           event: pass
           channel: "legal-monitoring"
@@ -41,10 +45,6 @@ jobs:
           event: fail
           channel: "legal-monitoring"
           template: MY_ORB_TEMPLATE_FAIL 
-      - persist_to_workspace:
-          root: .
-          paths:
-            - gitflow.zip
   deploy-staging:
     machine:
       enabled: true
