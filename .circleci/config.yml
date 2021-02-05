@@ -27,7 +27,9 @@ jobs:
       - run: sudo docker-php-ext-install zip
       - run:
           name: Export custom slack template
-          command: echo 'export MY_ORB_TEMPLATE_PASS=$(cat ~/project/slack_template/tests_pass.json)' >> $BASH_ENV
+          command: |
+             echo 'export MY_ORB_TEMPLATE_PASS=$(jq .pass ~/project/slack_template/templates.json)' >> $BASH_ENV
+             echo 'export MY_ORB_TEMPLATE_FAIL=$(jq .fail ~/project/slack_template/templates.json)' >> $BASH_ENV
       - run:
           name: Archiving the codebase
           command: zip -r gitflow.zip .
@@ -69,6 +71,6 @@ workflows:
   build-stage:
     jobs:
       - build
-      - deploy-staging:
-           requires:
-              - build
+    #  - deploy-staging:
+    #       requires:
+    #          - build
