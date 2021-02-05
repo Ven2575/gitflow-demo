@@ -28,8 +28,8 @@ jobs:
       - run:
           name: Export custom slack template
           command: |
-             echo 'export MY_ORB_TEMPLATE_PASS=$(jq .pass ~/project/slack_template/templates.json)' >> $BASH_ENV
-             echo 'export MY_ORB_TEMPLATE_FAIL=$(jq .fail ~/project/slack_template/templates.json)' >> $BASH_ENV
+             echo 'export MY_ORB_TEMPLATE_PASS=$(jq .pass ~/gitflow/slack_template/templates.json)' >> $BASH_ENV
+             echo 'export MY_ORB_TEMPLATE_FAIL=$(jq .fail ~/gitflow/slack_template/templates.json)' >> $BASH_ENV
       - slack/notify:
           event: pass
           channel: "legal-monitoring"
