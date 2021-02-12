@@ -37,11 +37,11 @@ jobs:
           root: .
           paths:
             - gitflow.zip
-      - slack/notify:
+      #- slack/notify:
           event: pass
           channel: "legal-monitoring"
           template: MY_ORB_TEMPLATE_PASS
-      - slack/notify:
+      #- slack/notify:
           event: fail
           channel: "legal-monitoring"
           template: MY_ORB_TEMPLATE_FAIL 
