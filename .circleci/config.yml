@@ -38,13 +38,13 @@ jobs:
           paths:
             - gitflow.zip
       #- slack/notify:
-          event: pass
-          channel: "legal-monitoring"
-          template: MY_ORB_TEMPLATE_PASS
+       #   event: pass
+       #   channel: "legal-monitoring"
+        #  template: MY_ORB_TEMPLATE_PASS
       #- slack/notify:
-          event: fail
-          channel: "legal-monitoring"
-          template: MY_ORB_TEMPLATE_FAIL 
+         # event: fail
+         # channel: "legal-monitoring"
+         # template: MY_ORB_TEMPLATE_FAIL 
   deploy-staging:
     machine:
       enabled: true
