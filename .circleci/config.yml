@@ -39,7 +39,7 @@ jobs:
             - gitflow.zip
       - run:
           name: Generate SSL Keys for Rechtstexter API
-          command: openssl genpkey -out ./private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
+          command: openssl genpkey -out ./private.pem -pass rechtstexter -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
  
       #- slack/notify:
        #   event: pass
