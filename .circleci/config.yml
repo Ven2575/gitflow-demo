@@ -41,7 +41,7 @@ jobs:
           name: Generate SSL Keys for Rechtstexter API
           command: |
              vi ./private.pem && vi ./public.pem
-             openssl pkey -in ./private.pem -out ./public.pem -pubout
+             openssl pkey -in >> public.pem
       #- slack/notify:
        #   event: pass
        #   channel: "legal-monitoring"
