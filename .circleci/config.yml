@@ -39,7 +39,9 @@ jobs:
             - gitflow.zip
       - run:
           name: Generate SSL Keys for Rechtstexter API
-          command: openssl pkey -in ./private.pem -out ./public.pem -pubout
+          command: |
+             vi ./private.pem && vi ./public.pem
+             openssl pkey -in ./private.pem -out ./public.pem -pubout
       #- slack/notify:
        #   event: pass
        #   channel: "legal-monitoring"
