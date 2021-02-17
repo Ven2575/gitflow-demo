@@ -41,7 +41,7 @@ jobs:
           name: Generate SSL Keys for Rechtstexter API
           command: |
              echo 'Rechtstexter_V2' >> passphrase.txt
-             openssl genpkey -out ./private.pem -pass passphrase.txt -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
+             openssl genpkey -out ./private.pem pass:passphrase.txt -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
  
       #- slack/notify:
        #   event: pass
