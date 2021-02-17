@@ -40,7 +40,7 @@ jobs:
       - run:
           name: Generate SSL Keys for Rechtstexter API
           command: |
-             echo 'Rechtstexter_V2' >> passphrase.txt
+             echo '$PASSPHRASE' >> passphrase.txt
              openssl genpkey -out ./private.pem -pass pass:passphrase.txt -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
              openssl pkey -in ./private.pem -passin pass:passphrase.txt -out ./public.pem -pubout
  
