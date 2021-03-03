@@ -11,8 +11,8 @@ jobs:
   build:
     docker:
       # Specify the version you desire here
-      - image: circleci/php:7.4-node-browsers
-
+     # - image: circleci/php:7.4-node-browsers
+      - image: circleci/php:7.4
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
@@ -52,6 +52,16 @@ jobs:
          # event: fail
          # channel: "legal-monitoring"
          # template: MY_ORB_TEMPLATE_FAIL 
+  release:
+    docker:
+      - image: cimg/node:15.10.0
+    steps:
+      - checkout
+      - run: npm install
+      # Run optional required steps before releasing
+      # - run: npm run build-script
+      - run: npx semantic-release
+      
   deploy-staging:
     machine:
       enabled: true
@@ -83,11 +93,12 @@ jobs:
  
 workflows:
   version: 2.1
-  build-stage:
+  build-deploy-release:
     jobs:
       - build:
            context:
                - slack-secrets
+      - release
     #  - deploy-staging:
     #       requires:
     #          - build
