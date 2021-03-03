@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/Ven2575/gitflow-demo/compare/2.1.0...2.2.0) (2021-03-03)
+
+
+### Features
+
+* release job added ([2c257d7](https://github.com/Ven2575/gitflow-demo/commit/2c257d7773de7b3977b64f71a4eecb78c13c5187))
+
 # [2.1.0](https://github.com/Ven2575/gitflow-demo/compare/2.0.0...2.1.0) (2021-01-18)
 
 
