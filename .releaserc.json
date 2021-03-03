@@ -1,4 +1,7 @@
 {
+    "branches": [
+        "main", "develop"
+    ],
     "verifyConditions": [
         "@semantic-release/github"
     ],
