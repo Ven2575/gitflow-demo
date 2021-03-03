@@ -62,7 +62,7 @@ jobs:
           npm install @semantic-release/git
       # Run optional required steps before releasing
       # - run: npm run build-script
-      - run: npx semantic-release #--branches $CIRCLE_BRANCH
+      - run: npx semantic-release --branches $CIRCLE_BRANCH
       
   deploy-staging:
     machine:
