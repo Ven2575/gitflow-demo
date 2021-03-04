@@ -42,6 +42,6 @@ elif [[ "${DATE_DIFFERENCE_DAYS}" -lt "0" ]]; then
         #| mail -s "Certificate expiration warning for $TARGET" $RECIPIENT ;
 	exit 2
 else
-	echo "OK: Cert will expire on: ${DATE_EXPIRE_FORMAT}" \ | mail -s "Certificate expiration warning for $TARGET" ${RECIPIENT} <<< 'Certificate will expire';
+	echo "OK: Cert will expire on: ${DATE_EXPIRE_FORMAT}" && sudo mail -s "Certificate expiration warning for $TARGET" ${RECIPIENT} <<< 'Certificate will expire';
 	#exit 0
 fi
