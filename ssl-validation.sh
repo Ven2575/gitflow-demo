@@ -1,8 +1,8 @@
 #!/bin/bash
 TARGET="rt-staging.trustedshops.com"; 
 RECIPIENT="venkateswarlu.kuchipudi@trustedshops.de";
-CRITICAL_DAYS=3
-WARNING_DAYS=7
+CRITICAL_DAYS=3;
+WARNING_DAYS=7;
 #-----------
 # GET DATE |
 #-----------
