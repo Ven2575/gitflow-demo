@@ -25,17 +25,11 @@ DATE_EXPIRE_FORMAT=$(date -I --date="@${DATE_EXPIRE_SECONDS}")
 DATE_DIFFERENCE_SECONDS=$((${DATE_EXPIRE_SECONDS}-${DATE_ACTUALLY_SECONDS}))
 DATE_DIFFERENCE_DAYS=$((${DATE_DIFFERENCE_SECONDS}/60/60/24))
 
-echo $DATE_EXPIRE_FORMAT
-echo $DATE_DIFFERENCE_SECONDS
-echo ${DATE_DIFFERENCE_DAYS}
-echo ${CRITICAL_DAYS}
-echo ${WARNING_DAYS}
-
 #---------
 # NOTIFICATION |
 #---------
 
-if [[ ${DATE_DIFFERENCE_DAYS} -le ${CRITICAL_DAYS} && ${DATE_DIFFERENCE_DAYS} -ge 0 ]]; then
+if [[ ${DATE_DIFFERENCE_DAYS} -le ${CRITICAL_DAYS} ]]; then
 	echo -e "CRITICAL: Cert will expire on: "${DATE_EXPIRE_FORMAT}"" \
         | mail -s "Certificate expiration warning for $TARGET" $RECIPIENT ;
 	exit 2
