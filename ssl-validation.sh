@@ -8,7 +8,7 @@ WARNING_DAYS=7;
 #-----------
 DATE_ACTUALLY_SECONDS=$(date +"%s")
 
-echo "checking if $TARGET expires in less than $DAYS days";
+echo "checking if $TARGET SSL expiration days";
 
 #------------------
 # GET CERTIFICATE |
@@ -30,20 +30,20 @@ DATE_DIFFERENCE_DAYS=$((${DATE_DIFFERENCE_SECONDS}/60/60/24))
 #---------
 
 if [[ "${DATE_DIFFERENCE_DAYS}" -lt "${CRITICAL_DAYS}" && "${DATE_DIFFERENCE_DAYS}" -gt "0" ]]; then
-	echo -e "CRITICAL: Cert will expire on: "${DATE_EXPIRE_FORMAT}"" \
-        | mail -s "Certificate expiration warning for $TARGET" $RECIPIENT ;
+	echo -e "CRITICAL: Cert will expire on: "${DATE_EXPIRE_FORMAT}"" 
+        #| mail -s "Certificate expiration warning for $TARGET" $RECIPIENT ;
 	exit 2
 elif [[ "${DATE_DIFFERENCE_DAYS}" -lt "${WARNING_DAYS}" && "${DATE_DIFFERENCE_DAYS}" -gt "0" ]]; then
-	echo -e "WARNING: Cert will expire on: "${DATE_EXPIRE_FORMAT}"" \
-        | mail -s "Certificate expiration warning for $TARGET" $RECIPIENT ;
+	echo -e "WARNING: Cert will expire on: "${DATE_EXPIRE_FORMAT}"" 
+        #| mail -s "Certificate expiration warning for $TARGET" $RECIPIENT ;
 	exit 1
 elif [[ "${DATE_DIFFERENCE_DAYS}" -lt "0" ]]; then
-	echo -e "CRITICAL: Cert expired on: "${DATE_EXPIRE_FORMAT}"" \
-        | mail -s "Certificate expiration warning for $TARGET" $RECIPIENT ;
+	echo -e "CRITICAL: Cert expired on: "${DATE_EXPIRE_FORMAT}"" 
+        #| mail -s "Certificate expiration warning for $TARGET" $RECIPIENT ;
 	exit 2
 else
-	echo -e "OK: Cert will expire on: "${DATE_EXPIRE_FORMAT}"" \
-        | mail -s "Certificate expiration warning for $TARGET" $RECIPIENT ;
+	echo -e "OK: Cert will expire on: "${DATE_EXPIRE_FORMAT}"" 
+        #| mail -s "Certificate expiration warning for $TARGET" $RECIPIENT ;
 	exit 0
 fi
 
