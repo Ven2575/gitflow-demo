@@ -42,18 +42,7 @@ elif [[ "${DATE_DIFFERENCE_DAYS}" -lt "0" ]]; then
         #| mail -s "Certificate expiration warning for $TARGET" $RECIPIENT ;
 	exit 2
 else
-	echo "OK: Cert will expire on: ${DATE_EXPIRE_FORMAT}" \ | mail -s "Certificate expiration warning for $TARGET" $RECIPIENT ;
+	echo "OK: Cert will expire on: ${DATE_EXPIRE_FORMAT}" 
+	mail -s "Certificate expiration warning for $TARGET" $RECIPIENT
 	exit 0
 fi
-
-#2>&- \
-#| openssl x509 -text \ | sed 's/^notAfter=//g' \ | xargs -I{} date -d +%s) 
-echo $DATE_EXPIRE_SECONDS
-in7days=$(($(date +%s) + (86400*$DAYS)));
-echo $in7days
-#if [[ $in7days -gt $expirationdate ]]; then
-#    echo "KO - Certificate for $TARGET expires in less than $DAYS days, on $(date -d @$expirationdate '+%Y-%m-%d')" \
-#    | mail -s "Certificate expiration warning for $TARGET" $RECIPIENT ;
-#else
-#    echo "OK - Certificate expires on $expirationdate";
-#fi;
