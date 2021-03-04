@@ -23,7 +23,7 @@ jobs:
     working_directory: ~/gitflow
     steps:
       - checkout
-      - run: sudo apt update && sudo apt-get -y install bsd-mailx msmtp #mailutils # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
+      - run: sudo apt update && sudo apt-get -y install postfix msmtp #mailutils # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install zip
       - run:
           name: Export custom slack template
