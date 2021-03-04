@@ -29,11 +29,11 @@ DATE_DIFFERENCE_DAYS=$((${DATE_DIFFERENCE_SECONDS}/60/60/24))
 # NOTIFICATION |
 #---------
 
-if [[ ${DATE_DIFFERENCE_DAYS} -le ${CRITICAL_DAYS} ]]; then
+if [[ "${DATE_DIFFERENCE_DAYS}" -lt "${CRITICAL_DAYS}" && "${DATE_DIFFERENCE_DAYS}" -gt "0" ]]; then
 	echo -e "CRITICAL: Cert will expire on: "${DATE_EXPIRE_FORMAT}"" \
         | mail -s "Certificate expiration warning for $TARGET" $RECIPIENT ;
 	exit 2
-elif [[ "${DATE_DIFFERENCE_DAYS}" -le "${WARNING_DAYS}" && "${DATE_DIFFERENCE_DAYS}" -ge "0" ]]; then
+elif [[ "${DATE_DIFFERENCE_DAYS}" -lt "${WARNING_DAYS}" && "${DATE_DIFFERENCE_DAYS}" -gt "0" ]]; then
 	echo -e "WARNING: Cert will expire on: "${DATE_EXPIRE_FORMAT}"" \
         | mail -s "Certificate expiration warning for $TARGET" $RECIPIENT ;
 	exit 1
