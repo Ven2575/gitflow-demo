@@ -80,7 +80,7 @@ jobs:
       - run: ext -v
       - run:
           name: link old directory
-          command: ssh $SSH_USER@$SSH_HOST 'rm new && ln -s /var/www/clients/client1/web16/home/trusted_shops_deployment_test/old /var/www/clients/client1/web16/web/public/'
+          command: ssh $SSH_USER@$SSH_HOST 'unlink /var/www/clients/client1/web16/web/public/new && ln -s /var/www/clients/client1/web16/home/trusted_shops_deployment_test/old /var/www/clients/client1/web16/web/public/'
           when: on_fail    
       - run:
           name: link new directory
