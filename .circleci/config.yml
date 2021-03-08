@@ -78,13 +78,17 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "4e:80:2e:d7:16:88:03:b3:43:ee:15:bf:3e:c1:5b:05"
-      - run:
-          name: creating directories
-          command: ssh $SSH_USER@$SSH_HOST 'cd /var/www/dev.consent.trustedshops.com/web/public/ && mkdir -p $(date +"%d%m%Y")'
+     # - run:
+     #     name: creating directories
+     #     command: ssh $SSH_USER@$SSH_HOST 'cd /var/www/clients/client1/web16/home/trusted_shops_deployment_test'
       - run:
           name: Deploy over SSH
           command: |
-             scp -r /tmp/gitflow.zip $SSH_USER@$SSH_HOST:/var/www/dev.consent.trustedshops.com/web/public/$(date +"%d%m%Y")/
+             scp -r /tmp/gitflow.zip $SSH_USER@$SSH_HOST:/var/www/clients/client1/web16/home/trusted_shops_deployment_test/new
+      - run:
+          name: job status
+          command: |
+             echo $CCI_STATUS
       #ssh into staging server
   #    - run:
   #        name: Executing Commands on Staging Server
