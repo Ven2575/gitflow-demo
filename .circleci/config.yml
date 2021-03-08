@@ -44,7 +44,10 @@ jobs:
              echo '$PASSPHRASE' >> passphrase.txt
              openssl genpkey -out ./private.pem -pass pass:passphrase.txt -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
              openssl pkey -in ./private.pem -passin pass:passphrase.txt -out ./public.pem -pubout
- 
+      - run:
+          name: job status
+          command: |
+             echo $CCI_STATUS
       #- slack/notify:
        #   event: pass
        #   channel: "legal-monitoring"
@@ -105,7 +108,7 @@ workflows:
       - build:
            context:
                - slack-secrets
-      - release
+    #  - release
     #  - deploy-staging:
     #       requires:
     #          - build
