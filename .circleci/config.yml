@@ -84,7 +84,7 @@ jobs:
           when: on_fail    
       - run:
           name: link new directory
-          command: ssh $SSH_USER@$SSH_HOST 'rm -rf old && ln -sf /var/www/clients/client1/web16/home/trusted_shops_deployment_test/new /var/www/clients/client1/web16/web/public'
+          command: ssh $SSH_USER@$SSH_HOST 'unlink -f old && ln -sf /var/www/clients/client1/web16/home/trusted_shops_deployment_test/new /var/www/clients/client1/web16/web/public'
           when: on_success
      # - run:
      #     name: Deploy over SSH
