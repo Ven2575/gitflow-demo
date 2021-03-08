@@ -79,11 +79,11 @@ jobs:
             - "4e:80:2e:d7:16:88:03:b3:43:ee:15:bf:3e:c1:5b:05"
      # - run: ext -v
       - run:
-          name: creating directories
+          name: link old directory
           command: ssh $SSH_USER@$SSH_HOST 'rm -rf new && ln -s /var/www/clients/client1/web16/home/trusted_shops_deployment_test/old /var/www/clients/client1/web16/web/public/'
           when: on_fail    
       - run:
-          name: creating directories
+          name: link new directory
           command: ssh $SSH_USER@$SSH_HOST 'rm -rf unlink old && ln -sf /var/www/clients/client1/web16/home/trusted_shops_deployment_test/new /var/www/clients/client1/web16/web/public'
           when: on_success
      # - run:
