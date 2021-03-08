@@ -79,7 +79,7 @@ jobs:
             - "4e:80:2e:d7:16:88:03:b3:43:ee:15:bf:3e:c1:5b:05"
       - run:
           name: creating directories
-          command: ssh $SSH_USER@$SSH_HOST 'cd /var/www/clients/client1/web16/home/trusted_shops_deployment_test/new && vi 1.txt'
+          command: ssh $SSH_USER@$SSH_HOST 'cd /var/www/clients/client1/web16/home/trusted_shops_deployment_test/new && echo "new file" >> 1.txt'
           when: on_success    
      # - run:
      #     name: Deploy over SSH
