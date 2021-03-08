@@ -80,11 +80,11 @@ jobs:
      # - run: ext -v
       - run:
           name: creating directories
-          command: ssh $SSH_USER@$SSH_HOST 'unlink /var/www/clients/client1/web16/web/public/ && ln -s /var/www/clients/client1/web16/home/trusted_shops_deployment_test/old /var/www/clients/client1/web16/web/public/'
+          command: ssh $SSH_USER@$SSH_HOST 'unlink new && ln -s /var/www/clients/client1/web16/home/trusted_shops_deployment_test/old /var/www/clients/client1/web16/web/public/'
           when: on_fail    
       - run:
           name: creating directories
-          command: ssh $SSH_USER@$SSH_HOST 'unlink /var/www/clients/client1/web16/web/public/ && ln -sf /var/www/clients/client1/web16/home/trusted_shops_deployment_test/new /var/www/clients/client1/web16/web/public'
+          command: ssh $SSH_USER@$SSH_HOST 'unlink old && ln -sf /var/www/clients/client1/web16/home/trusted_shops_deployment_test/new /var/www/clients/client1/web16/web/public'
           when: on_success
      # - run:
      #     name: Deploy over SSH
