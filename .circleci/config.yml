@@ -80,8 +80,12 @@ jobs:
       - run: ext -v
       - run:
           name: creating directories
-          command: ssh $SSH_USER@$SSH_HOST 'ln -sf /var/www/clients/client1/web16/home/trusted_shops_deployment_test/old /var/www/clients/client1/web16/web'
+          command: ssh $SSH_USER@$SSH_HOST 'ln -sf /var/www/clients/client1/web16/home/trusted_shops_deployment_test/old /var/www/clients/client1/web16/web/public/'
           when: on_fail    
+      - run:
+          name: creating directories
+          command: ssh $SSH_USER@$SSH_HOST 'ln -sf /var/www/clients/client1/web16/home/trusted_shops_deployment_test/new /var/www/clients/client1/web16/web/public'
+          when: on_success
      # - run:
      #     name: Deploy over SSH
      #     command: |
