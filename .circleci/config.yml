@@ -38,16 +38,12 @@ jobs:
           root: .
           paths:
             - gitflow.zip
-      - run:
-          name: Generate SSL Keys for Rechtstexter API
-          command: |
-             echo '$PASSPHRASE' >> passphrase.txt
-             openssl genpkey -out ./private.pem -pass pass:passphrase.txt -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
-             openssl pkey -in ./private.pem -passin pass:passphrase.txt -out ./public.pem -pubout
-      - run:
-          name: job status
-          command: |
-             echo $CCI_STATUS
+     # - run:
+     #     name: Generate SSL Keys for Rechtstexter API
+     #     command: |
+     #        echo '$PASSPHRASE' >> passphrase.txt
+     #        openssl genpkey -out ./private.pem -pass pass:passphrase.txt -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
+     #        openssl pkey -in ./private.pem -passin pass:passphrase.txt -out ./public.pem -pubout
       #- slack/notify:
        #   event: pass
        #   channel: "legal-monitoring"
@@ -81,13 +77,14 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "4e:80:2e:d7:16:88:03:b3:43:ee:15:bf:3e:c1:5b:05"
-     # - run:
-     #     name: creating directories
-     #     command: ssh $SSH_USER@$SSH_HOST 'cd /var/www/clients/client1/web16/home/trusted_shops_deployment_test'
       - run:
-          name: Deploy over SSH
-          command: |
-             scp -r /tmp/gitflow.zip $SSH_USER@$SSH_HOST:/var/www/clients/client1/web16/home/trusted_shops_deployment_test/new
+          name: creating directories
+          command: ssh $SSH_USER@$SSH_HOST 'cd /var/www/clients/client1/web16/home/trusted_shops_deployment_test/new && vi 1.txt'
+          when: on_success    
+     # - run:
+     #     name: Deploy over SSH
+     #     command: |
+     #        scp -r /tmp/gitflow.zip $SSH_USER@$SSH_HOST:/var/www/clients/client1/web16/home/trusted_shops_deployment_test/new
       - run:
           name: job status
           command: |
@@ -109,6 +106,6 @@ workflows:
            context:
                - slack-secrets
     #  - release
-    #  - deploy-staging:
-    #       requires:
-    #          - build
+      - deploy-staging:
+           requires:
+              - build
