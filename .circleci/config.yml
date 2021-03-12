@@ -77,7 +77,6 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "4e:80:2e:d7:16:88:03:b3:43:ee:15:bf:3e:c1:5b:05"
-      - run: ext -v
       - run:
           name: link old directory
           command: ssh $SSH_USER@$SSH_HOST 'unlink /var/www/clients/client1/web16/web/public/new && ln -s /var/www/clients/client1/web16/home/trusted_shops_deployment_test/old /var/www/clients/client1/web16/web/public/'
@@ -106,7 +105,23 @@ workflows:
       - build:
            context:
                - slack-secrets
+      - slack/on-hold:
+           context:
+               - slack-secrets
+           requires:
+               - build
+           filters:
+               branches:
+                  only: main
+      - pause_workflow:
+          requires:
+            - build
+            - slack/on-hold
+          type: approval
     #  - release
       - deploy-staging:
            requires:
-              - build
+              - pause_workflow
+           filters:
+               branches:
+                  only: main
