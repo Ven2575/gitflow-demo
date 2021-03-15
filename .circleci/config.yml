@@ -87,7 +87,7 @@ jobs:
       - run:
           #name: link new directory
           name: Slack - Detecting Job Status (PASS)
-          command:|
+          command: |
              echo 'export CCI_STATUS="pass"' > /tmp/SLACK_JOB_STATUS
              cat SLACK_JOB_STATUS
              echo $CCI_STATUS
