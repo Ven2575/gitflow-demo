@@ -89,7 +89,7 @@ jobs:
           name: Slack - Detecting Job Status (PASS)
           command: |
              echo 'export CCI_STATUS="pass"' >> $BASH_ENV
-             echo $CCI_STATUS
+             echo $BASH_ENV
              #ssh $SSH_USER@$SSH_HOST 'unlink /var/www/clients/client1/web16/web/public/old && ln -sf /var/www/clients/client1/web16/home/trusted_shops_deployment_test/new /var/www/clients/client1/web16/web/public'
           when: on_success
      # - run:
