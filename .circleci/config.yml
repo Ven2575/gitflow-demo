@@ -78,20 +78,27 @@ jobs:
           fingerprints:
             - "4e:80:2e:d7:16:88:03:b3:43:ee:15:bf:3e:c1:5b:05"
       - run:
-          #name: link old directory
-          name: Slack - Detecting Job Status (FAIL)
-          command: 
-             echo 'export CCI_STATUS="fail"' >> $BASH_ENV
-             #ssh $SSH_USER@$SSH_HOST 'unlink /var/www/clients/client1/web16/web/public/new && ln -s /var/www/clients/client1/web16/home/trusted_shops_deployment_test/old /var/www/clients/client1/web16/web/public/'
-          when: on_fail    
-      - run:
-          #name: link new directory
-          name: Slack - Detecting Job Status (PASS)
+          name: API call to deploy job
           command: |
-             echo 'export CCI_STATUS="pass"' >> $BASH_ENV
-             echo $BASH_ENV
+             curl --request GET \
+               --url https://app.circleci.com/pipelines/github/Ven2575/gitflow-demo/$CIRCLE_BUILD_NUM \
+               #--url https://circleci.com/api/v2/project/gh/CircleCI-Public/api-preview-docs/job/123 \
+               --header 'authorization: Basic REPLACE_BASIC_AUTH'
+      #- run:
+          #name: link old directory
+      #    name: Slack - Detecting Job Status (FAIL)
+      #    command: 
+      #       echo 'export CCI_STATUS="fail"' >> $BASH_ENV
+             #ssh $SSH_USER@$SSH_HOST 'unlink /var/www/clients/client1/web16/web/public/new && ln -s /var/www/clients/client1/web16/home/trusted_shops_deployment_test/old /var/www/clients/client1/web16/web/public/'
+      #    when: on_fail    
+      #- run:
+          #name: link new directory
+      #    name: Slack - Detecting Job Status (PASS)
+      #    command: |
+      #       echo 'export CCI_STATUS="pass"' >> $BASH_ENV
+      #       echo $BASH_ENV
              #ssh $SSH_USER@$SSH_HOST 'unlink /var/www/clients/client1/web16/web/public/old && ln -sf /var/www/clients/client1/web16/home/trusted_shops_deployment_test/new /var/www/clients/client1/web16/web/public'
-          when: on_success
+      #    when: on_success
      # - run:
      #     name: Deploy over SSH
      #     command: |
