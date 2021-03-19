@@ -80,10 +80,11 @@ jobs:
       - run:
           name: API call to deploy job
           command: |
+             echo $CIRCLE_BUILD_NUM
              curl --request GET \
                --url https://app.circleci.com/pipelines/github/Ven2575/gitflow-demo/$CIRCLE_BUILD_NUM \
-               #--url https://circleci.com/api/v2/project/gh/CircleCI-Public/api-preview-docs/job/123 \
                --header 'authorization: Basic REPLACE_BASIC_AUTH'
+               #--url https://circleci.com/api/v2/project/gh/CircleCI-Public/api-preview-docs/job/123 \
       #- run:
           #name: link old directory
       #    name: Slack - Detecting Job Status (FAIL)
