@@ -81,8 +81,8 @@ jobs:
       - run:
           name: API call to deploy job
           command: |
-             curl --request GET \
-               --url https://app.circleci.com/workflows/github/Ven2575/gitflow-demo/$CIRCLE_JOB/$CIRCLE_BUILD_NUM \
+              curl --request GET \
+               --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_BUILD_NUM \
                --header 'authorization: Basic REPLACE_BASIC_AUTH' >> apioutput.json
                
                #--url https://circleci.com/api/v2/project/gh/CircleCI-Public/api-preview-docs/job/123 \
