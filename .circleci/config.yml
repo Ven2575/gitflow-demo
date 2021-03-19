@@ -1,0 +1,20 @@
+version: 2.1
+commands: # a reusable command with parameters
+  greeting:
+    parameters:
+      to:
+        default: "world"
+        type: string
+    steps:
+      - run: echo "Hello <<parameters.to>>"
+jobs:
+  my-job:
+    machine:
+       image: ubuntu-2004:202101-01
+    steps:
+      - greeting:
+          to: "Ven"
+workflows:
+  my-workflow:
+    jobs:
+      - my-job        
