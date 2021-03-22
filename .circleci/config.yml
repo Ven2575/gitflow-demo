@@ -20,7 +20,7 @@ jobs:
               curl --request GET \
                --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_BUILD_NUM \
                --header 'authorization: Basic REPLACE_BASIC_AUTH' >> apioutput.json
-       - run:
+      - run:
            name: finding job status
            command: |
              grep "success" ~/project/apioutput.json
