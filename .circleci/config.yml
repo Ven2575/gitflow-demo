@@ -14,6 +14,16 @@ jobs:
     steps:
       - greeting:
           to: "Ven"
+      - run:
+          name: API call to deploy job
+          command: |
+              curl --request GET \
+               --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_BUILD_NUM \
+               --header 'authorization: Basic REPLACE_BASIC_AUTH' >> apioutput.json
+       - run:
+           name: finding job status
+           command: |
+             grep "success" ~/project/apioutput.json
 workflows:
   my-workflow:
     jobs:
