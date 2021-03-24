@@ -23,7 +23,7 @@ jobs:
       - run:
            name: finding job status
            command: |
-              "echo 'export OUTPUT=$(grep "success" ~/project/apioutput.json)' >> $BASH_ENV
+              " export OUTPUT=$(grep "success" ~/project/apioutput.json)
               
               if [ -n "${OUTPUT}"]; then
                     echo "$OUTPUT"
