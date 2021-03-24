@@ -23,7 +23,8 @@ jobs:
       - run:
            name: finding job status
            command: |
-             grep "success" ~/project/apioutput.json
+              output=$(grep "success" ~/project/apioutput.json)
+              echo $output
 workflows:
   my-workflow:
     jobs:
