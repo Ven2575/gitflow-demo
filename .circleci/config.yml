@@ -23,7 +23,7 @@ jobs:
       - run:
            name: finding job status
            command: |
-              output: $(grep "success" ~/project/apioutput.json)
+              echo 'export output=$(grep "success" ~/project/apioutput.json)'>> $BASH_ENV
               echo $output
 workflows:
   my-workflow:
