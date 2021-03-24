@@ -24,12 +24,12 @@ jobs:
            name: finding job status
            command: |
               echo '
-              #! /bin/bash/
+              #!/bin/bash/
               OUTPUT=$(grep "success" ~/project/apioutput.json)
               
-              if [ -n "${OUTPUT}"]; then
-                    echo "$OUTPUT"
-                  else
+              if [ -n "${OUTPUT}" ]; then
+                     echo "$OUTPUT"
+                 else
                      echo "Job is failed"
                fi' >> jobstatus.sh
       - run: 
