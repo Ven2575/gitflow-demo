@@ -11,9 +11,12 @@ jobs:
   my-job:
     machine:
        image: ubuntu-2004:202101-01
+       environment:
+          job_number:$CIRCLE_BUILD_NUM
     steps:
       - greeting:
           to: "Ven"
+      - run: echo $job_number
       - run:
           name: API call to deploy job
           command: |
