@@ -23,13 +23,13 @@ jobs:
       - run:
            name: finding job status
            command: |
-              echo 'export OUTPUT=$(grep "success" ~/project/apioutput.json)' >> $BASH_ENV
+              "echo 'export OUTPUT=$(grep "success" ~/project/apioutput.json)' >> $BASH_ENV
               
               if [ -n "${OUTPUT}"]; then
                     echo "$OUTPUT"
                   else
                      echo "Job is failed"
-               fi
+               fi"
                
 workflows:
   my-workflow:
