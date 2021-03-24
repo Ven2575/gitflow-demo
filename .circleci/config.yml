@@ -16,7 +16,7 @@ jobs:
     steps:
       - greeting:
           to: "Ven"
-      - run: echo ${CIRCLE_BUILD_NUM
+      - run: echo $CIRCLE_BUILD_NUM
       - run:
           name: API call to deploy job
           command: |
