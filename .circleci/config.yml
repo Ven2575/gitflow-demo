@@ -17,8 +17,8 @@ jobs:
       - run: 
            name: saving build number in variable
            command: |
-              echo 'export job_id= $CIRCLE_BUILD_NUM' >>$BASH_ENV
-              echo $job_id
+              echo 'export job_id= $CIRCLE_BUILD_NUM' 
+             
       - run:
           name: API call to deploy job
           command: |
