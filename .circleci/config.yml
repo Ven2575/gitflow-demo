@@ -17,13 +17,16 @@ jobs:
       - run: 
            name: saving build number in variable
            command: |
-              echo job_id= $CIRCLE_BUILD_NUM
-             
+              echo job_id=$CIRCLE_BUILD_NUM
+  job-status:
+    machine:
+       image: ubuntu-2004:202101-01
+    steps:
       - run:
           name: API call to deploy job
           command: |
               curl --request GET \
-               --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_BUILD_NUM \
+               --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$job_id \
                --header 'authorization: Basic REPLACE_BASIC_AUTH' >> apioutput.json
       - run:
            name: finding job status
@@ -46,4 +49,7 @@ jobs:
 workflows:
   my-workflow:
     jobs:
-      - my-job        
+      - my-job
+      - job-status:
+           requires:
+              - my-job
