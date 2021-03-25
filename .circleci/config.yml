@@ -18,9 +18,14 @@ jobs:
       - run:
           name: API call to deploy job
           command: |
-              curl --request GET \
-               --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_BUILD_NUM \
-               --header 'authorization: Basic REPLACE_BASIC_AUTH' >> apioutput.json
+             # curl --request GET \
+             #  --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_BUILD_NUM \
+             #  --header 'authorization: Basic REPLACE_BASIC_AUTH' >> apioutput.json
+               OUTPUT= "$(curl --request GET \
+                --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_BUILD_NUM \
+                --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "running")"
+                echo $OUTPUT
+             
       - run:
            name: finding job status
            command: |
