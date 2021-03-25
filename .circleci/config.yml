@@ -14,14 +14,16 @@ jobs:
     steps:
       - greeting:
           to: "Ven"
-      - run: 
-           name: saving build number in variable
-           command: |
-              echo job_id=$CIRCLE_BUILD_NUM
+          
   job-status:
     machine:
        image: ubuntu-2004:202101-01
+    
     steps:
+      - run: 
+          name: saving build number in variable
+          command: |
+             echo job_id=$CIRCLE_PREVIOUS_BUILD_NUM
       - run:
           name: API call to deploy job
           command: |
