@@ -24,9 +24,13 @@ jobs:
                OUTPUT="$(curl --request GET \
                 --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_BUILD_NUM \
                 --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "running")"
-               
-               echo $OUTPUT
-             
+               if [ -n "${OUTPUT}" ]; then
+                     export OUTPUT=true
+                     echo "it is $OUTPUT"
+                 else
+                     export OUTPUT= false
+                     echo "it is $OUTPUT
+               fi
       - run:
            name: finding job status
            command: |
