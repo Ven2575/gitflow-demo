@@ -31,7 +31,7 @@ jobs:
               echo '
               #!/bin/bash/
               OUTPUT=$(grep "running" ~/project/apioutput.json)
-              
+              echo $OUTPUT
               if [ -n "${OUTPUT}" ]; then
                      export OUTPUT= "true"
                      echo $OUTPUT
