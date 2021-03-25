@@ -31,13 +31,12 @@ jobs:
               echo '
               #!/bin/bash/
               OUTPUT=$(grep "running" ~/project/apioutput.json)
-              echo $OUTPUT
               if [ -n "${OUTPUT}" ]; then
-                     export OUTPUT= "true"
-                     echo $OUTPUT
+                     export OUTPUT=true
+                     echo "it is $OUTPUT"
                  else
-                     export OUTPUT= "false"
-                     echo $OUTPUT
+                     export OUTPUT= false
+                     echo "it is $OUTPUT"
                fi' >> jobstatus.sh
       - run: 
             name: Finding the job status
