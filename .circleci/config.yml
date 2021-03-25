@@ -7,11 +7,7 @@ commands: # a reusable command with parameters
         type: string
     steps:
       - run: echo "Hello <<parameters.to>>"
-          
-parameters:
-  status:
-    default: false
-    type: boolean
+
 jobs:
   my-job:
     machine:
@@ -43,11 +39,19 @@ jobs:
             command: |
                sh ~/project/jobstatus.sh
       
- # rollback-to-previous:
- #    description: It'll be enabled only when current deployment fails
- #    machine: true
- #    steps:
- #       - run: echo "Hello << pipeline.parameters.status >>"
+  rollback-to-previous:
+     description: It'll be enabled only when current deployment fails
+     parameters:
+       status:
+         default: false
+         type: boolean
+     machine: true
+     steps:
+        - run: 
+             name: print out previous step variable value
+             command: |
+                echo $OUTPUT
+                echo "Hello << parameters.status >>"
   
   #job-status:
   #  machine:
@@ -87,6 +91,10 @@ workflows:
   my-workflow:
     jobs:
       - my-job
+      - rollback-to-previous:
+           requires:
+              - my-job
+           #status: $OUTPUT
     #  - rollback-to-previous:
     #       when: << pipeline.parameters.status >>
     #       requires:
