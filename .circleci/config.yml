@@ -1,12 +1,12 @@
 version: 2.1
 commands: # a reusable command with parameters
-  job-status:
+  jobstatus:
     parameters:
       output:
         default: false
         type: boolean
-     steps:
-        - run: echo "it is $output"
+    steps:
+      - run: echo "it is $output"
         
 jobs:
   my-job:
@@ -24,9 +24,9 @@ jobs:
               #  --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "running")"
                 
                #if [ -n "${OUTPUT}" ]; then status: true && echo $status; else status: false && echo $status; fi 
-        - job-status:
-             output: true
-          when: success
+      - jobstatus: 
+          output: true
+          #when: success
       
   rollback-to-previous:
      description: It'll be enabled only when current deployment fails
