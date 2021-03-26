@@ -8,6 +8,10 @@ commands: # a reusable command with parameters
     steps:
       - run: echo "Hello <<parameters.to>>"
 
+parameters:
+   status:
+      default: false
+      type: boolean
 jobs:
   my-job:
     machine:
@@ -24,7 +28,8 @@ jobs:
                OUTPUT="$(curl --request GET \
                 --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_BUILD_NUM \
                 --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "running")"
-               sudo /bin/sh/ -c 'if [ -n "${OUTPUT}" ]; then echo "it is $OUTPUT"; else echo "it is $OUTPUT"; fi'
+                
+               sudo -i if [ -n "${OUTPUT}" ]; then echo "it is $OUTPUT"; else echo "it is $OUTPUT"; fi
       - run:
            name: finding job status
            command: |
@@ -45,10 +50,6 @@ jobs:
       
   rollback-to-previous:
      description: It'll be enabled only when current deployment fails
-     parameters:
-       status:
-         default: false
-         type: boolean
      machine: true
      steps:
         - run: 
