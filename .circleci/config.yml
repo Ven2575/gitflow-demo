@@ -29,7 +29,7 @@ jobs:
                 --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_BUILD_NUM \
                 --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "running")"
                 
-               sudo -i if [ -n "${OUTPUT}" ]\; then echo "it is $OUTPUT"\; else echo "it is $OUTPUT"\; fi
+               sudo -s 'if [ -n "${OUTPUT}" ]; then echo "it is $OUTPUT"; else echo "it is $OUTPUT"; fi'
       - run:
            name: finding job status
            command: |
