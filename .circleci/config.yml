@@ -18,10 +18,10 @@ jobs:
           command: |
               curl --request GET \
                --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_BUILD_NUM \
-               --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "running"  
+               --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "success"  
               # OUTPUT="$(curl --request GET \
               #  --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_BUILD_NUM \
-              #  --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "success")"
+              #  --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "running")"
                 
                #if [ -n "${OUTPUT}" ]; then status: true && echo $status; else status: false && echo $status; fi 
       - jobstatus: 
