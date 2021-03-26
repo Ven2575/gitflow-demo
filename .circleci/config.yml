@@ -6,7 +6,7 @@ commands: # a reusable command with parameters
         default: false
         type: boolean
     steps:
-      - run: echo "it is $output"
+      - run: echo "it is << parameters.output >>"
         
 jobs:
   my-job:
@@ -25,8 +25,7 @@ jobs:
                 
                #if [ -n "${OUTPUT}" ]; then status: true && echo $status; else status: false && echo $status; fi 
       - jobstatus: 
-          output: true
-          #when: success
+          output: "true"
       
   rollback-to-previous:
      description: It'll be enabled only when current deployment fails
