@@ -26,18 +26,21 @@ jobs:
                #if [ -n "${OUTPUT}" ]; then status: true && echo $status; else status: false && echo $status; fi 
       - jobstatus: 
           output: true
-          when: always
       
   rollback-to-previous:
      description: It'll be enabled only when current deployment fails
      machine: true
      steps:
-        - run: 
-             name: print out previous step variable value
-             command: |
-                echo " it is $OUTPUT"
-               # echo "Hello << parameters.status >>"
-  
+        - when:
+          condition: <<parameters.output>>
+          steps:
+            - run: testing parameter value
+                echo "I'm in rollback job"
+        - unless:
+            condition: <<parameters.output>>
+            steps:
+               - run: testing parameter value
+                     echo "I'm in rollback job, unless loop"
   #job-status:
   #  machine:
   #     image: ubuntu-2004:202101-01
@@ -76,9 +79,9 @@ workflows:
   my-workflow:
     jobs:
       - my-job
-      #- rollback-to-previous:
-      #     requires:
-      #        - my-job
+      - rollback-to-previous:
+           requires:
+             - my-job
            #status: $OUTPUT
     #  - rollback-to-previous:
     #       when: << pipeline.parameters.status >>
