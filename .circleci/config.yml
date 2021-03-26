@@ -18,7 +18,7 @@ jobs:
           command: |
               curl --request GET \
                --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_BUILD_NUM \
-               --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "success"  
+               --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "running"  
               # OUTPUT="$(curl --request GET \
               #  --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_BUILD_NUM \
               #  --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "running")"
@@ -31,16 +31,11 @@ jobs:
      description: It'll be enabled only when current deployment fails
      machine: true
      steps:
-        - when:
-          condition: <<parameters.output>>
-          steps:
-            - run: testing parameter value
+        - run:
+            name: testing parameter variable
+            command: |
                 echo "I'm in rollback job"
-        - unless:
-            condition: <<parameters.output>>
-            steps:
-               - run: testing parameter value
-                     echo "I'm in rollback job, unless loop"
+            when: << parameters.output >>
   #job-status:
   #  machine:
   #     image: ubuntu-2004:202101-01
