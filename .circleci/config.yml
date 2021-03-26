@@ -1,24 +1,18 @@
 version: 2.1
 commands: # a reusable command with parameters
-  greeting:
+  job-status:
     parameters:
-      to:
-        default: "world"
-        type: string
-    steps:
-      - run: echo "Hello <<parameters.to>>"
-
-parameters:
-   status:
-      default: false
-      type: boolean
+      output:
+        default: false
+        type: boolean
+     steps:
+        - run: echo "it is $output"
+        
 jobs:
   my-job:
     machine:
        image: ubuntu-2004:202101-01
     steps:
-      - greeting:
-          to: "Ven"
       - run:
           name: API call to deploy job
           command: |
@@ -30,23 +24,9 @@ jobs:
               #  --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "running")"
                 
                #if [ -n "${OUTPUT}" ]; then status: true && echo $status; else status: false && echo $status; fi 
-      - run:
-           name: finding job status
-           command: |
-              echo '
-              #!/bin/bash/
-              OUTPUT=$(grep "running" ~/project/apioutput.json)
-              if [ -n "${OUTPUT}" ]; then
-                     export OUTPUT=true
-                     echo "it is $OUTPUT"
-                 else
-                     export OUTPUT= false
-                     echo "it is $OUTPUT"
-               fi' >> jobstatus.sh
-      - run: 
-            name: Finding the job status
-            command: |
-               sh ~/project/jobstatus.sh
+        - job-status:
+             output: true
+          when: success
       
   rollback-to-previous:
      description: It'll be enabled only when current deployment fails
@@ -96,9 +76,9 @@ workflows:
   my-workflow:
     jobs:
       - my-job
-      - rollback-to-previous:
-           requires:
-              - my-job
+      #- rollback-to-previous:
+      #     requires:
+      #        - my-job
            #status: $OUTPUT
     #  - rollback-to-previous:
     #       when: << pipeline.parameters.status >>
