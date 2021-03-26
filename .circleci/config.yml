@@ -56,7 +56,7 @@ jobs:
              name: print out previous step variable value
              command: |
                 echo " it is $OUTPUT"
-                echo "Hello << parameters.status >>"
+               # echo "Hello << parameters.status >>"
   
   #job-status:
   #  machine:
