@@ -25,7 +25,7 @@ jobs:
                 
                #if [ -n "${OUTPUT}" ]; then status: true && echo $status; else status: false && echo $status; fi 
       - jobstatus: 
-          output: "true"
+          output: true
       
   rollback-to-previous:
      description: It'll be enabled only when current deployment fails
