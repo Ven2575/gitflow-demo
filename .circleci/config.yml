@@ -36,6 +36,7 @@ jobs:
                   "output": true
                   }
               }' https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline
+      - run: echo "parameter value is << pipeline.parameters.output >>"
        
        #-u ${CIRCLECI_TOKEN}: -X
   rollback-to-previous:
