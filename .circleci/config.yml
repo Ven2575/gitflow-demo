@@ -13,7 +13,6 @@ jobs:
     machine:
        image: ubuntu-2004:202101-01
     steps:
-      - run: echo "test API"
       - run:
           name: API call to deploy job
           command: |
@@ -27,7 +26,7 @@ jobs:
               --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline \
               --header 'Circle-Token: 4ba4c16b93e6e3999938690200ec4d2c5d52ee8e' \
               --header 'content-type: application/json' \
-              --data '{"parameters": {"output":true}}'  
+              --data '{"branch": "develop", "parameters": {"output":true}}'  
             
             echo "the parameter value is << pipeline.parameters.output >>"
               # OUTPUT="$(curl --request GET \
