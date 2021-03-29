@@ -30,12 +30,18 @@ jobs:
       - run:
            name: Defining parameter value
            command: |
-              echo "parameter value is << pipeline.parameters.output >>" 
-              curl -u ${CIRCLECI_TOKEN}: -X POST --header "Content-Type: application/json" -d '{
-                  "parameters": {
-                   "output": true
-                  }
-              }' https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline
+              curl --request POST \
+                --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline \
+                --header 'Circle-Token: 4ba4c16b93e6e3999938690200ec4d2c5d52ee8e' \
+                --header 'content-type: application/json' \
+                --data '{"parameters":{"output":true}}'
+             
+             # echo "parameter value is << pipeline.parameters.output >>" 
+             # curl -u ${CIRCLECI_TOKEN}: -X POST --header "Content-Type: application/json" -d '{
+             #     "parameters": {
+             #      "output": true
+             #     }
+             # }' https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline
       - run: echo "parameter value is << pipeline.parameters.output >>"
        
   rollback-to-previous:
