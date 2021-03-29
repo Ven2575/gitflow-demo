@@ -40,7 +40,8 @@ jobs:
        #-u ${CIRCLECI_TOKEN}: -X
   rollback-to-previous:
      description: It'll be enabled only when current deployment fails
-     machine: true
+     machine: 
+        image: ubuntu-2004:202101-01
      steps:
        - when:
           condition: << pipeline.parameters.output >>
