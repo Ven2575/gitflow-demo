@@ -42,10 +42,18 @@ jobs:
      description: It'll be enabled only when current deployment fails
      machine: true
      steps:
-        - run:
-            name: testing parameter variable
-            command: |
-                echo "I'm in rollback job"
+       - when:
+          condition: << pipeline.parameters.output >>
+          steps:
+            - run: echo "deployment successful"
+       - unless:
+          condition: << pipeline.parameters.output >>
+          steps:
+            - run: echo "deployment fail"
+      # - run:
+      #      name: testing parameter variable
+      #      command: |
+      #          echo "I'm in rollback job"
   #job-status:
   #  machine:
   #     image: ubuntu-2004:202101-01
@@ -85,10 +93,9 @@ workflows:
     when: << pipeline.parameters.output >>
     jobs:
       - my-job
-  rollback:
-    unless: << pipeline.parameters.output >>
-    jobs:
-      - rollback-to-previous
+      - rollback-to-previous:
+           requires:
+              - my-job
            #status: $OUTPUT
     #  - rollback-to-previous:
     #       when: << pipeline.parameters.status >>
