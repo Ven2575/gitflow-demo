@@ -1,10 +1,10 @@
 version: 2.1
 #commands: # a reusable command with parameters
 #  jobstatus:
-parameters:
-  output:
-    default: false
-    type: boolean
+#parameters:
+#  output:
+#    default: false
+#    type: boolean
 #    steps:
 #      - run: echo "it is << parameters.output >>"
         
@@ -26,22 +26,22 @@ jobs:
                #if [ -n "${OUTPUT}" ]; then status: true && echo $status; else status: false && echo $status; fi 
  #     - jobstatus: 
  #         output: true
-      - run:
-           name: Defining parameter value
-           command: |
-              curl --request POST \
-                --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline \
-                --header 'Circle-Token: 4ba4c16b93e6e3999938690200ec4d2c5d52ee8e' \
-                --header 'content-type: application/json' \
-                --data '{"parameters": {"output": true}}'
+ #     - run:
+ #          name: Defining parameter value
+ #          command: |
+ #             curl --request POST \
+ #               --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline \
+ #               --header 'Circle-Token: 4ba4c16b93e6e3999938690200ec4d2c5d52ee8e' \
+ #               --header 'content-type: application/json' \
+ #               --data '{"parameters": {"output": true}}'
              
-              echo "parameter value is << pipeline.parameters.output >>" 
+ #             echo "parameter value is << pipeline.parameters.output >>" 
              # curl -u ${CIRCLECI_TOKEN}: -X POST --header "Content-Type: application/json" -d '{
              #     "parameters": {
              #      "output": true
              #     }
              # }' https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline
-      - run: echo "parameter value is << pipeline.parameters.output >>"
+  #    - run: echo "parameter value is << pipeline.parameters.output >>"
   status: # defines a parameterized job
     description: A job that does very little other than demonstrate what a parameterized job looks like
     parameters:
@@ -60,7 +60,7 @@ jobs:
           condition: << parameters.job_status >>
           steps:
             - run: echo "deployment fail"
-      - run: echo "Hello << parameters.job_status >>"     
+     # - run: echo "Hello << parameters.job_status >>"     
   
   rollback-to-previous:
      description: It'll be enabled only when current deployment fails
@@ -84,7 +84,7 @@ workflows:
       - status:
           requires:
              - my-job
-          job_status: true
+      #    job_status: true
      # - rollback-to-previous:
      #      requires:
      #         - status
