@@ -1,12 +1,12 @@
 version: 2.1
 #commands: # a reusable command with parameters
 #  jobstatus:
-#parameters:
-#  output:
-#    default: false
-#    type: boolean
-#    steps:
-#      - run: echo "it is << parameters.output >>"
+parameters:
+  output:
+    default: false
+    type: boolean
+  #  steps:
+  #    - run: echo "it is << parameters.output >>"
         
 jobs:
   my-job:
@@ -14,12 +14,20 @@ jobs:
        image: ubuntu-2004:202101-01
     steps:
       - run: echo "test API"
-      #- run:
-       #   name: API call to deploy job
-       #   command: |
-       #       curl --request GET \
-       #        --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_BUILD_NUM \
-       #        --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "running"  
+      - run:
+          name: API call to deploy job
+          command: |
+              curl --request GET \
+               --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_BUILD_NUM \
+               --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "running"  
+      - run:
+          name: parameter value fixing
+          command: |
+            curl --request POST \
+              --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline \
+              --header 'Circle-Token: 4ba4c16b93e6e3999938690200ec4d2c5d52ee8e' \
+              --header 'content-type: application/json' \
+              --data '{"branch": "develop","parameters": {"output":true}}'  
               # OUTPUT="$(curl --request GET \
               #  --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_BUILD_NUM \
               #  --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "running")"
@@ -44,36 +52,36 @@ jobs:
              # }' https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline
   #    - run: echo "parameter value is << pipeline.parameters.output >>"
   status: # defines a parameterized job
-    description: A job that does very little other than demonstrate what a parameterized job looks like
-    parameters:
-      job_status:
-        description: "job status modifying based on the previous job result"
-        default: false
-        type: boolean 
+   # description: A job that does very little other than demonstrate what a parameterized job looks like
+   # parameters:
+   #   job_status:
+   #     description: "job status modifying based on the previous job result"
+   #     default: false
+   #     type: boolean 
     machine:
        image: ubuntu-2004:202101-01
     steps:
-      - run:
-          name: API call to deploy job
-          command: |
-              curl --request GET \
-               --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_PREVIOUS_BUILD_NUM \
-               --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "success"
-      - run:
-           name: parameter value fixing
-           command: |
-              curl --request POST \
-                --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline \
-                --header 'Circle-Token: 4ba4c16b93e6e3999938690200ec4d2c5d52ee8e' \
-                --header 'content-type: application/json' \
-                --data '{"parameters": {"job_status":true}}'
-           when: on_success
+   #   - run:
+   #       name: API call to deploy job
+   #       command: |
+   #           curl --request GET \
+   #            --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_PREVIOUS_BUILD_NUM \
+   #            --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "success"
+   #   - run:
+   #        name: parameter value fixing
+   #        command: |
+   #           curl --request POST \
+   #             --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline \
+   #             --header 'Circle-Token: 4ba4c16b93e6e3999938690200ec4d2c5d52ee8e' \
+   #             --header 'content-type: application/json' \
+   #             --data '{"parameters": {"job_status":true}}'
+   #        when: on_success
       - when:
-          condition: << parameters.job_status >>
+          condition: << pipeline.parameters.output >>
           steps:
             - run: echo "deployment successful"
       - unless:
-          condition: << parameters.job_status >>
+          condition: << pipeline.parameters.output >>
           steps:
             - run: echo "deployment fail"
      # - run: echo "Hello << parameters.job_status >>"     
@@ -97,7 +105,7 @@ workflows:
   my-workflow:
     jobs:
       - my-job
-      - status
+     # - status
        #   requires:
       #      - my-job
       #    job_status: true
