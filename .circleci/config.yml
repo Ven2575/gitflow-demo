@@ -47,7 +47,7 @@ jobs:
     description: A job that does very little other than demonstrate what a parameterized job looks like
     parameters:
       job_status:
-        description: "To whom shall we say hello?"
+        description: "job status modifying based on the previous job result"
         default: false
         type: boolean 
     machine:
@@ -67,6 +67,7 @@ jobs:
                 --header 'Circle-Token: 4ba4c16b93e6e3999938690200ec4d2c5d52ee8e' \
                 --header 'content-type: application/json' \
                 --data '{"parameters": {"job_status":true}}'
+           when: on_success
       - when:
           condition: << parameters.job_status >>
           steps:
