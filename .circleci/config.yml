@@ -52,6 +52,17 @@ jobs:
     machine:
        image: ubuntu-2004:202101-01
     steps:
+      - run:
+          name: API call to deploy job
+          command: |
+              curl --request GET \
+               --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_PREVIOUS_BUILD_NUM \
+               --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "running"
+              curl --request POST \
+                --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline \
+                --header 'Circle-Token: 4ba4c16b93e6e3999938690200ec4d2c5d52ee8e' \
+                --header 'content-type: application/json' \
+                --data '{"parameters": {"job_status": true}}'
       - when:
           condition: << parameters.job_status >>
           steps:
@@ -81,9 +92,9 @@ workflows:
   my-workflow:
     jobs:
       - my-job
-      - status:
-          requires:
-             - my-job
+      - status
+       #   requires:
+      #      - my-job
       #    job_status: true
      # - rollback-to-previous:
      #      requires:
