@@ -52,6 +52,14 @@ jobs:
     machine:
        image: ubuntu-2004:202101-01
     steps:
+      - when:
+          condition: << pipeline.parameters.output >>
+          steps:
+            - run: echo "deployment successful"
+      - unless:
+          condition: << pipeline.parameters.output >>
+          steps:
+            - run: echo "deployment fail"
       - run: echo "Hello << parameters.job_status >>"     
   
   rollback-to-previous:
@@ -77,6 +85,6 @@ workflows:
           requires:
              - my-job
           job_status: true
-      - rollback-to-previous:
-           requires:
-              - status
+     # - rollback-to-previous:
+     #      requires:
+     #         - status
