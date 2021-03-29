@@ -30,7 +30,7 @@ jobs:
       - run:
            name: Defining parameter value
            command: |
-              curl --request POST --header "Content-Type: application/json" -d '{
+              curl -u ${CIRCLECI_TOKEN}: -X POST --header "Content-Type: application/json" -d '{
                   "parameters": {
                   "output": false
                   }
