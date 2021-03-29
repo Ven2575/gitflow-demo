@@ -3,7 +3,7 @@ version: 2.1
 #  jobstatus:
 parameters:
   output:
-    default: true
+    default: false
     type: boolean
 #    steps:
 #      - run: echo "it is << parameters.output >>"
@@ -33,7 +33,7 @@ jobs:
               echo ${CIRCLECI_TOKEN}
               curl -u ${CIRCLECI_TOKEN}: -X POST --header "Content-Type: application/json" -d '{
                   "parameters": {
-                  "output": false
+                  "output": true
                   }
               }' https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline
        
