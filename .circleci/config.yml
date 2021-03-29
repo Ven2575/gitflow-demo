@@ -30,11 +30,15 @@ jobs:
       - run:
            name: Defining parameter value
            command: |
-              curl --request POST \
-                --url https://circleci.com/api/v2/pipeline/continue \
+              curl -u ${CIRCLECI_TOKEN}: -X POST \
                 --header 'authorization: Basic REPLACE_BASIC_AUTH' \
-                --header 'content-type: application/json' \
-                --data '{"continuation-key":"string","configuration":"string",parameters":{"output":true}}' 
+                --header 'content-type: application/json' -d '{
+                    "continuation-key":"string"
+                    "configuration":"string"
+                    parameters": {
+                      "output":true
+                      }
+                  }' https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline/continue
 
               #echo ${CIRCLECI_TOKEN}
               #curl -u ${CIRCLECI_TOKEN}: -X POST --header "Content-Type: application/json" -d '{
