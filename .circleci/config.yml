@@ -1,12 +1,12 @@
 version: 2.1
-commands: # a reusable command with parameters
-  jobstatus:
-    parameters:
-      output:
-        default: false
-        type: boolean
-    steps:
-      - run: echo "it is << parameters.output >>"
+#commands: # a reusable command with parameters
+#  jobstatus:
+parameters:
+  output:
+    default: true
+    type: boolean
+#    steps:
+#      - run: echo "it is << parameters.output >>"
         
 jobs:
   my-job:
@@ -24,9 +24,19 @@ jobs:
               #  --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "running")"
                 
                #if [ -n "${OUTPUT}" ]; then status: true && echo $status; else status: false && echo $status; fi 
-      - jobstatus: 
-          output: true
+ #     - jobstatus: 
+ #         output: true
       
+      - run:
+           name: Defining parameter value
+           command: |
+              curl --request POST --header "Content-Type: application/json" -d '{
+                  "parameters": {
+                  "output": false
+                  }
+              }' https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline
+       
+       #-u ${CIRCLECI_TOKEN}: -X
   rollback-to-previous:
      description: It'll be enabled only when current deployment fails
      machine: true
@@ -35,14 +45,6 @@ jobs:
             name: testing parameter variable
             command: |
                 echo "I'm in rollback job"
-        - when:
-            condition: << parameters.output >>
-            steps:
-               - run: echo "Deployment is successful"
-        - unless:
-            condition: << parameters.output >>
-            steps:
-               - run: echo "Deployment is failed"
   #job-status:
   #  machine:
   #     image: ubuntu-2004:202101-01
@@ -79,11 +81,13 @@ jobs:
 workflows:
   version: 2
   my-workflow:
+    when: << pipeline.parameters.output >>
     jobs:
       - my-job
-      - rollback-to-previous:
-          requires:
-             - my-job
+  rollback:
+    unless: << pipeline.parameters.output >>
+    jobs:
+      - rollback-to-previous
            #status: $OUTPUT
     #  - rollback-to-previous:
     #       when: << pipeline.parameters.status >>
