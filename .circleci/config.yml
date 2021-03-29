@@ -30,23 +30,14 @@ jobs:
       - run:
            name: Defining parameter value
            command: |
-              curl -u ${CIRCLECI_TOKEN}: -X POST --header 'content-type: application/json' -d '{
-                    "continuation-key": "string"
-                    "configuration": "string"
-                    parameters": {
-                      "output":true
-                      }
-                  }' https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline/continue
-
-              #echo ${CIRCLECI_TOKEN}
-              #curl -u ${CIRCLECI_TOKEN}: -X POST --header "Content-Type: application/json" -d '{
-              #    "parameters": {
-              #     "output": true
-              #    }
-              #}' https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline
+              echo "parameter value is << pipeline.parameters.output >>" 
+              curl -u ${CIRCLECI_TOKEN}: -X POST --header "Content-Type: application/json" -d '{
+                  "parameters": {
+                   "output": true
+                  }
+              }' https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline
       - run: echo "parameter value is << pipeline.parameters.output >>"
        
-       #-u ${CIRCLECI_TOKEN}: -X
   rollback-to-previous:
      description: It'll be enabled only when current deployment fails
      machine: 
@@ -60,43 +51,7 @@ jobs:
           condition: << pipeline.parameters.output >>
           steps:
             - run: echo "deployment fail"
-      # - run:
-      #      name: testing parameter variable
-      #      command: |
-      #          echo "I'm in rollback job"
-  #job-status:
-  #  machine:
-  #     image: ubuntu-2004:202101-01
-  #  steps:
-  #    - run: 
-  #        name: saving build number in variable
-  #        command: |
-  #           echo 'export job_id=$CIRCLE_PREVIOUS_BUILD_NUM' >> $BASH_ENV
-  #           #echo job_id=$CIRCLE_PREVIOUS_BUILD_NUM
-  #    - run:
-  #        name: API call to deploy job
-  #        command: |
-  #           curl --request GET \
-  #             --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$job_id \
-  #             --header 'authorization: Basic REPLACE_BASIC_AUTH' >> apioutput.json
-  #    - run:
-  #         name: finding job status
-  #         command: |
-  #            echo '
-  #            #!/bin/bash/
-  #            OUTPUT=$(grep "success" ~/project/apioutput.json)
-  #            
-  #            if [ -n "${OUTPUT}" ]; then
-  #                   echo "${OUTPUT}"
-  #               else
-  #                   echo "Job is failed"
-  #             fi' >> jobstatus.sh
-  #    - run: 
-        
-   #         name: Finding the job status
-   #         command: |
-   #            sh ~/project/jobstatus.sh
-               
+   
 workflows:
   version: 2
   my-workflow:
@@ -105,17 +60,3 @@ workflows:
       - rollback-to-previous:
            requires:
               - my-job
-           #status: $OUTPUT
-    #  - rollback-to-previous:
-    #       when: << pipeline.parameters.status >>
-    #       requires:
-    #          - my-job
-      
-     # - job-status:
-     #      requires:
-     #         - my-job
-  #rollback:
-  #   when: << pipeline.parameters.output >>
-  #   jobs:
-  #     - rollback-to-previous #invokes parametrized job
-              
