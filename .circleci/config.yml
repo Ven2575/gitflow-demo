@@ -26,7 +26,6 @@ jobs:
                #if [ -n "${OUTPUT}" ]; then status: true && echo $status; else status: false && echo $status; fi 
  #     - jobstatus: 
  #         output: true
-      
       - run:
            name: Defining parameter value
            command: |
@@ -43,7 +42,18 @@ jobs:
              #     }
              # }' https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline
       - run: echo "parameter value is << pipeline.parameters.output >>"
-       
+  status: # defines a parameterized job
+    description: A job that does very little other than demonstrate what a parameterized job looks like
+    parameters:
+      job_status:
+        description: "To whom shall we say hello?"
+        default: false
+        type: boolean 
+    machine:
+       image: ubuntu-2004:202101-01
+    steps:
+      - run: echo "Hello << parameters.job_status >>"     
+  
   rollback-to-previous:
      description: It'll be enabled only when current deployment fails
      machine: 
@@ -63,6 +73,10 @@ workflows:
   my-workflow:
     jobs:
       - my-job
+      - status:
+          requires:
+             - my-job
+          job_status: true
       - rollback-to-previous:
            requires:
-              - my-job
+              - status
