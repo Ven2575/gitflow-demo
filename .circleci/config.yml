@@ -35,7 +35,14 @@ jobs:
             name: testing parameter variable
             command: |
                 echo "I'm in rollback job"
-            when: << parameters.output >>
+        - when:
+            condition: << parameters.output >>
+            steps:
+               - run: echo "Deployment is successful"
+        - unless:
+            condition: << parameters.output >>
+            steps:
+               - run: echo "Deployment is failed"
   #job-status:
   #  machine:
   #     image: ubuntu-2004:202101-01
@@ -75,7 +82,7 @@ workflows:
     jobs:
       - my-job
       - rollback-to-previous:
-           requires:
+          requires:
              - my-job
            #status: $OUTPUT
     #  - rollback-to-previous:
@@ -87,7 +94,7 @@ workflows:
      #      requires:
      #         - my-job
   #rollback:
-  #   when: << pipeline.parameters.status >>
+  #   when: << pipeline.parameters.output >>
   #   jobs:
   #     - rollback-to-previous #invokes parametrized job
               
