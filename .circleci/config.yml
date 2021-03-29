@@ -36,7 +36,7 @@ jobs:
                 --header 'content-type: application/json' \
                 --data '{"parameters": {"output": true}}'
              
-             # echo "parameter value is << pipeline.parameters.output >>" 
+              echo "parameter value is << pipeline.parameters.output >>" 
              # curl -u ${CIRCLECI_TOKEN}: -X POST --header "Content-Type: application/json" -d '{
              #     "parameters": {
              #      "output": true
