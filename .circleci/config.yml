@@ -34,7 +34,7 @@ jobs:
                 --url https://circleci.com/api/v2/pipeline/continue \
                 --header 'authorization: Basic REPLACE_BASIC_AUTH' \
                 --header 'content-type: application/json' \
-                --data '{parameters":{"output":true}}' 
+                --data '{"continuation-key":"string","configuration":"string",parameters":{"output":true}}' 
 
               #echo ${CIRCLECI_TOKEN}
               #curl -u ${CIRCLECI_TOKEN}: -X POST --header "Content-Type: application/json" -d '{
