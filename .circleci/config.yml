@@ -53,11 +53,11 @@ jobs:
        image: ubuntu-2004:202101-01
     steps:
       - when:
-          condition: << pipeline.parameters.output >>
+          condition: << parameters.job_status >>
           steps:
             - run: echo "deployment successful"
       - unless:
-          condition: << pipeline.parameters.output >>
+          condition: << parameters.job_status >>
           steps:
             - run: echo "deployment fail"
       - run: echo "Hello << parameters.job_status >>"     
