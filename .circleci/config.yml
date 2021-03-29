@@ -30,11 +30,9 @@ jobs:
       - run:
            name: Defining parameter value
            command: |
-              curl -u ${CIRCLECI_TOKEN}: -X POST \
-                --header 'authorization: Basic REPLACE_BASIC_AUTH' \
-                --header 'content-type: application/json' -d '{
-                    "continuation-key":"string"
-                    "configuration":"string"
+              curl -u ${CIRCLECI_TOKEN}: -X POST --header 'content-type: application/json' -d '{
+                    "continuation-key": "string"
+                    "configuration": "string"
                     parameters": {
                       "output":true
                       }
