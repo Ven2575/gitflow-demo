@@ -23,7 +23,7 @@ jobs:
           name: parameter value fixing
           command: |
             curl --request POST \
-              --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline \
+              --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline/continue \
               --header 'Circle-Token: 4ba4c16b93e6e3999938690200ec4d2c5d52ee8e' \
               --header 'content-type: application/json' \
               --data '{"branch": "develop", "parameters": {"output":true}}'  
@@ -63,12 +63,6 @@ jobs:
        image: ubuntu-2004:202101-01
     steps:
    #   - run:
-   #       name: API call to deploy job
-   #       command: |
-   #           curl --request GET \
-   #            --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_PREVIOUS_BUILD_NUM \
-   #            --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "success"
-   #   - run:
    #        name: parameter value fixing
    #        command: |
    #           curl --request POST \
@@ -80,10 +74,22 @@ jobs:
       - when:
           condition: << pipeline.parameters.output >>
           steps:
+            - run:
+                name: API call to deploy job
+                command: |
+                  curl --request GET \
+                   --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_PREVIOUS_BUILD_NUM \
+                   --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "success"
             - run: echo "deployment successful"
       - unless:
           condition: << pipeline.parameters.output >>
           steps:
+            - run:
+                name: API call to deploy job
+                command: |
+                  curl --request GET \
+                   --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_PREVIOUS_BUILD_NUM \
+                   --header 'authorization: Basic REPLACE_BASIC_AUTH' | grep "fail"
             - run: echo "deployment fail"
      # - run: echo "Hello << parameters.job_status >>"     
   
@@ -106,9 +112,9 @@ workflows:
   my-workflow:
     jobs:
       - my-job
-      - status:
-          requires:
-            - my-job
+      - status
+      #    requires:
+      #      - my-job
       #    job_status: true
      # - rollback-to-previous:
      #      requires:
