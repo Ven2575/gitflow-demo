@@ -23,10 +23,8 @@ jobs:
                               "rollback_job": true
                             }
                           }'
-     
+               echo "parameter value is << pipeline.parameters.rollback_job >> "
           when: on_fail       
-   
-
                
   test:
     docker:
