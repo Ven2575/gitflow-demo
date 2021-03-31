@@ -24,7 +24,7 @@ jobs:
                               "run_workflow_rollback_job": true
                             }
                           }'
-               echo "parameter value is << pipeline.parameters.rollback_job >> "
+               echo "parameter value is << pipeline.parameters.run_workflow_rollback_job >> "
           when: on_fail       
                
   test:
