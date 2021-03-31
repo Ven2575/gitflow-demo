@@ -1,91 +1,144 @@
+ # PHP CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-php/ for more details
+#
 version: 2.1
 
-parameters:
-  run_workflow_rollback_job:
-    type: boolean
-    default: false      
-      
+orbs:
+   slack: circleci/slack@4.2.0
+   
 jobs:
   build:
     docker:
-      - image: cimg/base:2020.01
+      # Specify the version you desire here
+     # - image: circleci/php:7.4-node-browsers
+      - image: circleci/php:7.4
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # Using the RAM variation mitigates I/O contention
+      # for database intensive operations.
+      # - image: circleci/mysql:5.7-ram
+      # - image: redis:2.8.19
+    working_directory: ~/gitflow
     steps:
-
-      - run: "build job"
-      - run: 
-          name: run rollback job
+      - checkout
+      - run: sudo apt update && sudo apt-get -y install msmtp #mailutils # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
+      - run: sudo docker-php-ext-install zip
+      - run:
+          name: Export custom slack template
           command: |
-              curl --location --request POST 'https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline' \
-              --header 'Content-Type: application/json' \
-              -u "${CIRCLE_TOKEN}:" \
-              -d '{ 
-                            "parameters": {
-                              "run_workflow_rollback_job": true
-                            }
-                          }'
-               echo "parameter value is << pipeline.parameters.run_workflow_rollback_job >> "
-          when: on_fail       
-          ##"branch": "feature/rollback-spike" 
-  test:
+             echo 'export MY_ORB_TEMPLATE_PASS=$(jq .build_pass ~/gitflow/slack_template/templates.json)' >> $BASH_ENV
+             echo 'export MY_ORB_TEMPLATE_FAIL=$(jq .build_fail ~/gitflow/slack_template/templates.json)' >> $BASH_ENV  
+     # - run: bash ./ssl-validation.sh
+      - run:
+          name: Archiving the codebase
+          command: zip -r gitflow.zip .
+      - persist_to_workspace:
+          root: .
+          paths:
+            - gitflow.zip
+     # - run:
+     #     name: Generate SSL Keys for Rechtstexter API
+     #     command: |
+     #        echo '$PASSPHRASE' >> passphrase.txt
+     #        openssl genpkey -out ./private.pem -pass pass:passphrase.txt -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
+     #        openssl pkey -in ./private.pem -passin pass:passphrase.txt -out ./public.pem -pubout
+      #- slack/notify:
+       #   event: pass
+       #   channel: "legal-monitoring"
+        #  template: MY_ORB_TEMPLATE_PASS
+      #- slack/notify:
+         # event: fail
+         # channel: "legal-monitoring"
+         # template: MY_ORB_TEMPLATE_FAIL 
+  release:
     docker:
-      - image: cimg/base:2020.01
+      - image: cimg/node:15.10.0
     steps:
-      - run: echo "test job"
-      - run: 
-          name: run rollback job
-          command: |
-              curl --location --request POST 'https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline' \
-              --header 'Content-Type: application/json' \
-              -u "${CIRCLE_TOKEN}:" \
-              -d '{
-                            #"branch": "feature/rollback-spike", 
-                            "parameters": {
-                              "run_workflow_rollback_job": true
-                            }
-                          }'
-     
-          when: on_fail       
-
-  deploy:
-    docker:
-      - image: cimg/base:2020.01
-    steps:
-      - run: echo "deploy"
-      - run: 
-          name: run rollback job
-          command: |
-              curl --location --request POST 'https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline' \
-              --header 'Content-Type: application/json' \
-              -u "${CIRCLE_TOKEN}:" \
-              -d '{
-                            #"branch": "feature/rollback-spike",
-                            "parameters": {
-                              "run_workflow_rollback_job": true
-                            }
-                          }'
-     
-          when: on_fail       
-  rollback:
-    docker:
-      - image: cimg/base:2020.01
-    steps:
-      - run: echo "running rollback job"      
+      - checkout
+      - run: |
+          npm install @semantic-release/changelog
+          npm install @semantic-release/git
+      # Run optional required steps before releasing
+      # - run: npm run build-script
+      - run: npx semantic-release #--branches $CIRCLE_BRANCH
       
-            
-      
+  deploy-staging:
+    machine:
+       image: ubuntu-2004:202101-01
+      #enabled: true
+    steps:
+      - attach_workspace:
+          at: /tmp/
+      - run:
+          name: Fix ssh Could not resolve hostname
+          command: |
+             ssh-keyscan 94.130.12.67 >> ~/.ssh/known_hosts # Add staging server IP to known hosts
+      - add_ssh_keys:
+          fingerprints:
+            - "4e:80:2e:d7:16:88:03:b3:43:ee:15:bf:3e:c1:5b:05"
+      - run:
+          name: API call to deploy job
+          command: |
+              curl --request GET \
+               --url https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/job/$CIRCLE_BUILD_NUM \
+               --header 'authorization: Basic REPLACE_BASIC_AUTH' >> apioutput.json
+               
+               #--url https://circleci.com/api/v2/project/gh/CircleCI-Public/api-preview-docs/job/123 \
+               #https://circleci.com/api/v2/project/{project-slug}/job/{job-number}
+      #- run:
+          #name: link old directory
+      #    name: Slack - Detecting Job Status (FAIL)
+      #    command: 
+      #       echo 'export CCI_STATUS="fail"' >> $BASH_ENV
+             #ssh $SSH_USER@$SSH_HOST 'unlink /var/www/clients/client1/web16/web/public/new && ln -s /var/www/clients/client1/web16/home/trusted_shops_deployment_test/old /var/www/clients/client1/web16/web/public/'
+      #    when: on_fail    
+      #- run:
+          #name: link new directory
+      #    name: Slack - Detecting Job Status (PASS)
+      #    command: |
+      #       echo 'export CCI_STATUS="pass"' >> $BASH_ENV
+      #       echo $BASH_ENV
+             #ssh $SSH_USER@$SSH_HOST 'unlink /var/www/clients/client1/web16/web/public/old && ln -sf /var/www/clients/client1/web16/home/trusted_shops_deployment_test/new /var/www/clients/client1/web16/web/public'
+      #    when: on_success
+     # - run:
+     #     name: Deploy over SSH
+     #     command: |
+     #        scp -r /tmp/gitflow.zip $SSH_USER@$SSH_HOST:/var/www/clients/client1/web16/home/trusted_shops_deployment_test/new
+      #ssh into staging server
+  #    - run:
+  #        name: Executing Commands on Staging Server
+  #        command: ssh $SSH_USER@$SSH_HOST 'cd /var/www/dev.consent.trustedshops.com/web/public/'
+  #    - slack/notify:
+  #        event: pass
+  #        channel: "legal-monitoring"
+  #        template: MY_ORB_TEMPLATE_PASS 
+ 
 workflows:
-  build-test:
+  version: 2.1
+  build-deploy-release:
     jobs:
-      - build
-      - test:
-          requires:
-            - build
-      - deploy:
-          requires:
-            - test     
-  rollback_workflow:
-    when: << pipeline.parameters.run_workflow_rollback_job >>
-    jobs:
-      - rollback
-           
-     
+     # - build:
+     #      context:
+     #          - slack-secrets
+      #- slack/on-hold:
+      #     context:
+      #         - slack-secrets
+      #     requires:
+      #         - build
+      #     filters:
+      #         branches:
+      #            only: main
+      #- pause_workflow:
+      #    requires:
+      #      - build
+      #      - slack/on-hold
+      #    type: approval
+    #  - release
+      - deploy-staging:
+           #requires:
+           #   - pause_workflow
+           filters:
+               branches:
+                  only: main
