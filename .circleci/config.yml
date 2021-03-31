@@ -19,6 +19,7 @@ jobs:
               --header 'Content-Type: application/json' \
               -u "${CIRCLE_TOKEN}:" \
               -d '{
+                            "branch": "feature/rollback-spike", 
                             "parameters": {
                               "rollback_job": true
                             }
@@ -38,6 +39,7 @@ jobs:
               --header 'Content-Type: application/json' \
               -u "${CIRCLE_TOKEN}:" \
               -d '{
+                            "branch": "feature/rollback-spike", 
                             "parameters": {
                               "rollback_job": true
                             }
@@ -57,6 +59,7 @@ jobs:
               --header 'Content-Type: application/json' \
               -u "${CIRCLE_TOKEN}:" \
               -d '{
+                            "branch": "feature/rollback-spike",
                             "parameters": {
                               "rollback_job": true
                             }
