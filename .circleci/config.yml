@@ -19,6 +19,7 @@ jobs:
               --header 'Content-Type: application/json' \
               --header 'Circle-Token: 4ba4c16b93e6e3999938690200ec4d2c5d52ee8e' \
               -d '{ 
+                            "branch": "feature/rollback-spike" ,
                             "parameters": {
                               "run_workflow_rollback_job": true
                             }
