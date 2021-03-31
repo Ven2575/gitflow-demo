@@ -19,7 +19,7 @@ jobs:
               --header 'Content-Type: application/json' \
               -u "${CIRCLE_TOKEN}:" \
               -d '{
-                            "branch": "feature/rollback-spike", 
+                            #"branch": "feature/rollback-spike", 
                             "parameters": {
                               "run_workflow_rollback_job": true
                             }
@@ -39,7 +39,7 @@ jobs:
               --header 'Content-Type: application/json' \
               -u "${CIRCLE_TOKEN}:" \
               -d '{
-                            "branch": "feature/rollback-spike", 
+                            #"branch": "feature/rollback-spike", 
                             "parameters": {
                               "run_workflow_rollback_job": true
                             }
@@ -59,7 +59,7 @@ jobs:
               --header 'Content-Type: application/json' \
               -u "${CIRCLE_TOKEN}:" \
               -d '{
-                            "branch": "feature/rollback-spike",
+                            #"branch": "feature/rollback-spike",
                             "parameters": {
                               "run_workflow_rollback_job": true
                             }
@@ -87,4 +87,7 @@ workflows:
   rollback_workflow:
     when: << pipeline.parameters.run_workflow_rollback_job >>
     jobs:
-      - rollback 
+      - rollback:
+          branches:
+            only:
+               - feature/rollback-spike
