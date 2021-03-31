@@ -18,15 +18,14 @@ jobs:
               curl --location --request POST 'https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline' \
               --header 'Content-Type: application/json' \
               -u "${CIRCLE_TOKEN}:" \
-              -d '{
-                            #"branch": "feature/rollback-spike", 
+              -d '{ 
                             "parameters": {
                               "run_workflow_rollback_job": true
                             }
                           }'
                echo "parameter value is << pipeline.parameters.run_workflow_rollback_job >> "
           when: on_fail       
-               
+          ##"branch": "feature/rollback-spike" 
   test:
     docker:
       - image: cimg/base:2020.01
