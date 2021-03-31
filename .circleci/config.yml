@@ -88,6 +88,7 @@ workflows:
     when: << pipeline.parameters.run_workflow_rollback_job >>
     jobs:
       - rollback:
-          branches:
-            only:
-               - feature/rollback-spike
+          filters:
+            branches:
+              only:
+                - feature/rollback-spike
