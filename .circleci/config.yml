@@ -15,7 +15,7 @@ jobs:
       - run: 
           name: run rollback job
           command: |
-              curl --location --request POST 'https://circleci.com/api/v2/project/:vcs/:org/:repo/pipeline' \
+              curl --location --request POST 'https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline' \
               --header 'Content-Type: application/json' \
               -u "${CIRCLE_TOKEN}:" \
               -d '{
@@ -34,7 +34,7 @@ jobs:
       - run: 
           name: run rollback job
           command: |
-              curl --location --request POST 'https://circleci.com/api/v2/project/:vcs/:org/:repo/pipeline' \
+              curl --location --request POST 'https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline' \
               --header 'Content-Type: application/json' \
               -u "${CIRCLE_TOKEN}:" \
               -d '{
@@ -53,7 +53,7 @@ jobs:
       - run: 
           name: run rollback job
           command: |
-              curl --location --request POST 'https://circleci.com/api/v2/project/:vcs/:org/:repo/pipeline' \
+              curl --location --request POST 'https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline' \
               --header 'Content-Type: application/json' \
               -u "${CIRCLE_TOKEN}:" \
               -d '{
