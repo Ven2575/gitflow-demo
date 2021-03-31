@@ -11,7 +11,7 @@ jobs:
       - image: cimg/base:2020.01
     steps:
 
-      - run: echo "build job"
+      - run: "build job"
       - run: 
           name: run rollback job
           command: |
