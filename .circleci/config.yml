@@ -78,7 +78,7 @@ jobs:
           command: |
             ssh $SSH_USER@$SSH_HOST 'unlink /var/www/clients/client1/web16/web/public/old && ln -sf /var/www/clients/client1/web16/home/trusted_shops_deployment_test/new /var/www/clients/client1/web16/web/public'
           when: on_success
- rollback:
+  rollback:
     docker:
       - image: cimg/base:2020.01
     steps:
