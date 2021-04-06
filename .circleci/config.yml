@@ -1,7 +1,7 @@
 version: 2.1
 
 parameters:
-  run_workflow_rollback_job:
+  rollback_job:
     type: boolean
     default: false      
       
@@ -21,10 +21,10 @@ jobs:
               -d '{ 
                             "branch": "feature/rollback-spike" ,
                             "parameters": {
-                              "run_workflow_rollback_job": true
+                              "rollback_job": true
                             }
                           }'
-               echo "parameter value is << pipeline.parameters.run_workflow_rollback_job >> "
+               echo "parameter value is << pipeline.parameters.rollback_job >> "
           when: on_fail       
           ##"branch": "feature/rollback-spike" 
   test:
@@ -41,7 +41,7 @@ jobs:
               -d '{
                             #"branch": "feature/rollback-spike", 
                             "parameters": {
-                              "run_workflow_rollback_job": true
+                              "rollback_job": true
                             }
                           }'
      
@@ -61,7 +61,7 @@ jobs:
               -d '{
                             #"branch": "feature/rollback-spike",
                             "parameters": {
-                              "run_workflow_rollback_job": true
+                              "rollback_job": true
                             }
                           }'
      
@@ -76,6 +76,7 @@ jobs:
       
 workflows:
   build-test:
+    unless: << pipeline.parameters.rollback_job >>
     jobs:
       - build
       - test:
@@ -85,7 +86,7 @@ workflows:
           requires:
             - test     
   rollback_workflow:
-    when: << pipeline.parameters.run_workflow_rollback_job >>
+    when: << pipeline.parameters.rollback_job >>
     jobs:
       - rollback
  
