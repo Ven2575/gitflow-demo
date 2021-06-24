@@ -1,9 +1,4 @@
-version: 2.1
-
-parameters:
-  rollback_job:
-    type: boolean
-    default: false      
+version: 2.1      
       
 jobs:
   build:
@@ -11,42 +6,13 @@ jobs:
       - image: cimg/base:2020.01
     steps:
 
-      - run: echo "build job"
-      - run: 
-          name: run rollback job
-          command: |
-              curl --location --request POST 'https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline' \
-              --header 'Content-Type: application/json' \
-              --header 'Circle-Token: 4ba4c16b93e6e3999938690200ec4d2c5d52ee8e' \
-              -d '{ 
-                            "branch": "feature/rollback-spike" ,
-                            "parameters": {
-                              "rollback_job": true
-                            }
-                          }'
-               echo "parameter value is << pipeline.parameters.rollback_job >> "
-          when: on_fail       
-          ##"branch": "feature/rollback-spike" 
+      - run: echo "build job" 
   test:
     machine:
        image: ubuntu-2004:202101-01
     steps:
-      - run: echo "test job"
-      - run: 
-          name: run rollback job
-          command: |
-              curl --location --request POST 'https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline' \
-              --header 'Content-Type: application/json' \
-              --header 'Circle-Token: 4ba4c16b93e6e3999938690200ec4d2c5d52ee8e' \
-              -d '{
-                            #"branch": "feature/rollback-spike", 
-                            "parameters": {
-                              "rollback_job": true
-                            }
-                          }'
-     
-          when: on_fail       
-
+      - run: echo "test job"       
+      
   deploy:
     machine:
        image: ubuntu-2004:202101-01
@@ -59,46 +25,19 @@ jobs:
           fingerprints:
             - "4e:80:2e:d7:16:88:03:b3:43:ee:15:bf:3e:c1:5b:05"
       - run: echo "deploy"
-      - run: 
-          name: run rollback job
-          command: |
-              curl --location --request POST 'https://circleci.com/api/v2/project/github/Ven2575/gitflow-demo/pipeline' \
-              --header 'Content-Type: application/json' \
-              --header 'Circle-Token: 4ba4c16b93e6e3999938690200ec4d2c5d52ee8e' \
-              -d '{
-                            #"branch": "feature/rollback-spike",
-                            "parameters": {
-                              "rollback_job": true
-                            }
-                          }'
-     
-          when: on_fail
       - run:
           name: symlink to new version
           command: |
-            ssh $SSH_USER@$SSH_HOST 'unlink /var/www/clients/client1/web16/web/public/old && ln -sf /var/www/clients/client1/web16/home/trusted_shops_deployment_test/new /var/www/clients/client1/web16/web/public'
+            ssh $SSH_USER@$SSH_HOST 'cd /var/www/clients/client1/web16/web && ln -sf /var/www/clients/client1/web16/web/new/ public'
           when: on_success
-  rollback:
-    machine:
-       image: ubuntu-2004:202101-01
-    steps:
-      - run:
-          name: Fix ssh Could not resolve hostname
-          command: |
-             ssh-keyscan 94.130.12.67 >> ~/.ssh/known_hosts # Add staging server IP to known hosts
-      - add_ssh_keys:
-          fingerprints:
-            - "4e:80:2e:d7:16:88:03:b3:43:ee:15:bf:3e:c1:5b:05"
-      - run: echo "running rollback job"
       - run:
           name: symlink to old version
           command: |
-            ssh $SSH_USER@$SSH_HOST 'unlink /var/www/clients/client1/web16/web/public/new && ln -s /var/www/clients/client1/web16/home/trusted_shops_deployment_test/old /var/www/clients/client1/web16/web/public/'
-          when: on_success
+            ssh $SSH_USER@$SSH_HOST 'cd /var/www/clients/client1/web16/web && unlink public && ln -sf /var/www/clients/client1/web16/web/old/ public'
+          when: on_failure
             
 workflows:
   build-test:
-    unless: << pipeline.parameters.rollback_job >>
     jobs:
       - build
       - test:
@@ -106,9 +45,5 @@ workflows:
             - build
       - deploy:
           requires:
-            - test     
-  rollback_workflow:
-    when: << pipeline.parameters.rollback_job >>
-    jobs:
-      - rollback
+            - test    
  
