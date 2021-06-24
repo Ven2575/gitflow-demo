@@ -24,11 +24,11 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "4e:80:2e:d7:16:88:03:b3:43:ee:15:bf:3e:c1:5b:05"
-      - run: echo "deploy"
+      - run: echo "deploy
       - run:
           name: symlink to new version
           command: |
-            ssh $SSH_USER@$SSH_HOST 'cd /var/www/clients/client1/web16/web && ln -sf /var/www/clients/client1/web16/web/new/ public'
+            ssh $SSH_USER@$SSH_HOST 'cd /var/www/clients/client1/web16/web && unlink public && ln -sf /var/www/clients/client1/web16/web/new/ public'
           when: on_success
       - run:
           name: symlink to old version
