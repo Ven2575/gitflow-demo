@@ -34,7 +34,7 @@ jobs:
           name: symlink to old version
           command: |
             ssh $SSH_USER@$SSH_HOST 'cd /var/www/clients/client1/web16/web && unlink public && ln -sf /var/www/clients/client1/web16/web/old/ public'
-          when: on_failure
+          when: on_fail
             
 workflows:
   build-test:
